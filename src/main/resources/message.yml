@@ -8,3 +8,6 @@ ADMIN:
     - "&9/ditems addlore [lore] - Add lore"
     - "&9/ditems removelore [line] - Remove lore"
     - "&9/ditems setlore [line] [name] - Set lore"
+    - "&9/ditems help - Show help"
+    - "&9/ditems addenchant [Enchant] [Level] - Add enchant"
+    - "&9/ditems removeenchant [Enchant] - Remove enchant"

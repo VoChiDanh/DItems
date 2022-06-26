@@ -1,8 +1,12 @@
 package net.danh.ditems.Manager;
 
+import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.Chat;
 import net.danh.dcore.Utils.Items;
+import net.danh.ditems.DItems;
 import net.danh.ditems.Resource.Files;
+import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -96,6 +100,34 @@ public class NBTItem {
                 nbtItem.getItem().setItemMeta(im);
                 nbtItem.applyNBT(item);
             }
+        }
+    }
+
+    public void addEnchants(String enchantments, Integer level) {
+        NMSAssistant nms = new NMSAssistant();
+        Enchantment enchant;
+        if (nms.isVersionLessThanOrEqualTo(12)) {
+            enchant = Enchantment.getByName(enchantments.toUpperCase());
+        } else {
+            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getInstance(), enchantments.toUpperCase()));
+        }
+        if (enchant != null) {
+            nbtItem.getItem().addUnsafeEnchantment(enchant, level);
+            nbtItem.applyNBT(item);
+        }
+    }
+
+    public void removeEnchants(String enchantments) {
+        NMSAssistant nms = new NMSAssistant();
+        Enchantment enchant;
+        if (nms.isVersionLessThanOrEqualTo(12)) {
+            enchant = Enchantment.getByName(enchantments.toUpperCase());
+        } else {
+            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getInstance(), enchantments.toUpperCase()));
+        }
+        if (enchant != null && nbtItem.getItem().containsEnchantment(enchant)) {
+            nbtItem.getItem().removeEnchantment(enchant);
+            nbtItem.applyNBT(item);
         }
     }
 
