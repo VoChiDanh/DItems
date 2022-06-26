@@ -14,10 +14,8 @@ public class PlayerData {
         AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         p.setHealthScale(20);
         p.setHealthScaled(true);
-        double old_health = attribute.getBaseValue();
-        attribute.setBaseValue(20 + PlayerData.getPlayerStats(p, "MAX_HEALTH"));
-        if (old_health > attribute.getBaseValue()) {
-            p.setHealth(attribute.getBaseValue());
+        if (attribute != null) {
+            attribute.setBaseValue(20 + PlayerData.getPlayerStats(p, "MAX_HEALTH"));
         }
     }
 

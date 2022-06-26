@@ -1,6 +1,7 @@
 package net.danh.ditems.Listeners;
 
 import net.danh.dcore.Calculator.Calculator;
+import net.danh.dcore.Random.Number;
 import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.PlayerData.PlayerData;
 import net.danh.ditems.Resource.Files;
@@ -39,21 +40,45 @@ public class DamageEvent implements Listener {
                 ItemStack leggings = t.getInventory().getLeggings();
                 ItemStack boots = t.getInventory().getBoots();
                 if (new NBTItem(item).hasData()) {
-                    if (new NBTItem(item).hasStats("DAMAGE")) {
-                        if (helmet == null && chestplate == null && leggings == null && boots == null) {
-                            e.setDamage(new NBTItem(item).getStats("DAMAGE"));
-                        } else {
-                            int damage = (int) new NBTItem(item).getStats("DAMAGE");
-                            int armor = PlayerData.getArmorStats(t, "ARMOR");
-                            String calculator = Calculator.calculator(Objects.requireNonNull(new Files("stats").getConfig().getString("FORMULA.DAMAGE"))
-                                    .replaceAll("#damage#", String.valueOf(damage))
-                                    .replaceAll("#armor#", String.valueOf(armor)), 0);
-                            double d_damage = Double.parseDouble(calculator);
-                            int f_damage = (int) d_damage;
-                            if (f_damage > 0) {
-                                e.setDamage(f_damage);
+                    int crit_chance = (int) new NBTItem(item).getStats("CRIT_CHANCE");
+                    int crit_damage = (int) new NBTItem(item).getStats("CRIT_DAMAGE");
+                    int chance = Number.getRandomInt(1, 100);
+                    if (chance > crit_chance) {
+                        if (new NBTItem(item).hasStats("DAMAGE")) {
+                            if (helmet == null && chestplate == null && leggings == null && boots == null) {
+                                e.setDamage(new NBTItem(item).getStats("DAMAGE"));
                             } else {
-                                e.setDamage(1);
+                                int damage = (int) new NBTItem(item).getStats("DAMAGE");
+                                int armor = PlayerData.getArmorStats(t, "ARMOR");
+                                String calculator = Calculator.calculator(Objects.requireNonNull(new Files("stats").getConfig().getString("FORMULA.DAMAGE"))
+                                        .replaceAll("#damage#", String.valueOf(damage))
+                                        .replaceAll("#armor#", String.valueOf(armor)), 0);
+                                double d_damage = Double.parseDouble(calculator);
+                                int f_damage = (int) d_damage;
+                                if (f_damage > 0) {
+                                    e.setDamage(f_damage);
+                                } else {
+                                    e.setDamage(1);
+                                }
+                            }
+                        }
+                    } else {
+                        if (new NBTItem(item).hasStats("DAMAGE")) {
+                            if (helmet == null && chestplate == null && leggings == null && boots == null) {
+                                e.setDamage(new NBTItem(item).getStats("DAMAGE") * crit_damage);
+                            } else {
+                                int damage = (int) new NBTItem(item).getStats("DAMAGE") * crit_damage;
+                                int armor = PlayerData.getArmorStats(t, "ARMOR");
+                                String calculator = Calculator.calculator(Objects.requireNonNull(new Files("stats").getConfig().getString("FORMULA.DAMAGE"))
+                                        .replaceAll("#damage#", String.valueOf(damage))
+                                        .replaceAll("#armor#", String.valueOf(armor)), 0);
+                                double d_damage = Double.parseDouble(calculator);
+                                int f_damage = (int) d_damage;
+                                if (f_damage > 0) {
+                                    e.setDamage(f_damage);
+                                } else {
+                                    e.setDamage(1);
+                                }
                             }
                         }
                     }
