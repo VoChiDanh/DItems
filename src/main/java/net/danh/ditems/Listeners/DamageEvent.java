@@ -2,7 +2,7 @@ package net.danh.ditems.Listeners;
 
 import net.danh.dcore.Calculator.Calculator;
 import net.danh.ditems.Manager.NBTItem;
-import net.danh.ditems.PlayerData.Armor;
+import net.danh.ditems.PlayerData.PlayerData;
 import net.danh.ditems.Resource.Files;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ public class DamageEvent implements Listener {
         if (killer instanceof Player && !(target instanceof Player)) {
             Player p = (Player) killer;
             ItemStack item = p.getInventory().getItemInMainHand();
-            if (!new NBTItem(item).isVanilla()) {
+            if (new NBTItem(item).hasData()) {
                 if (new NBTItem(item).hasStats("DAMAGE")) {
                     e.setDamage(new NBTItem(item).getStats("DAMAGE"));
                 }
@@ -38,13 +38,13 @@ public class DamageEvent implements Listener {
                 ItemStack chestplate = t.getInventory().getChestplate();
                 ItemStack leggings = t.getInventory().getLeggings();
                 ItemStack boots = t.getInventory().getBoots();
-                if (!new NBTItem(item).isVanilla()) {
+                if (new NBTItem(item).hasData()) {
                     if (new NBTItem(item).hasStats("DAMAGE")) {
                         if (helmet == null && chestplate == null && leggings == null && boots == null) {
                             e.setDamage(new NBTItem(item).getStats("DAMAGE"));
                         } else {
                             int damage = (int) new NBTItem(item).getStats("DAMAGE");
-                            int armor = Armor.getArmor(t);
+                            int armor = PlayerData.getArmorStats(t, "ARMOR");
                             String calculator = Calculator.calculator(Objects.requireNonNull(new Files("stats").getConfig().getString("FORMULA.DAMAGE"))
                                     .replaceAll("#damage#", String.valueOf(damage))
                                     .replaceAll("#armor#", String.valueOf(armor)), 0);

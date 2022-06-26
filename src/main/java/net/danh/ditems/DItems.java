@@ -6,7 +6,9 @@ import net.danh.dcore.Utils.File;
 import net.danh.ditems.Listeners.ArmorEquip;
 import net.danh.ditems.Listeners.BlockDispenseArmor;
 import net.danh.ditems.Listeners.DamageEvent;
+import net.danh.ditems.Listeners.HealthRegen;
 import net.danh.ditems.Resource.Files;
+import net.danh.ditems.Runnable.Health;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DItems extends JavaPlugin {
@@ -23,6 +25,7 @@ public final class DItems extends JavaPlugin {
         DCore.RegisterDCore(this);
         getServer().getPluginManager().registerEvents(new DamageEvent(), this);
         getServer().getPluginManager().registerEvents(new ArmorEquip(), this);
+        getServer().getPluginManager().registerEvents(new HealthRegen(), this);
         NMSAssistant nms = new NMSAssistant();
         if (nms.isVersionGreaterThanOrEqualTo(13)) {
             getServer().getPluginManager().registerEvents(new BlockDispenseArmor(), this);
@@ -34,6 +37,10 @@ public final class DItems extends JavaPlugin {
         File.updateFile(DItems.getInstance(), new Files("stats").getConfig(), "stats.yml");
         File.updateFile(DItems.getInstance(), new Files("message").getConfig(), "message.yml");
         new net.danh.ditems.Commands.DItems(this);
+        Health health_runnable = new Health();
+        net.danh.ditems.Runnable.HealthRegen healthRegen_runnable = new net.danh.ditems.Runnable.HealthRegen();
+        health_runnable.runTaskTimer(this, 0L, 0L);
+        healthRegen_runnable.runTaskTimer(this, 0L, 100L);
     }
 
     @Override

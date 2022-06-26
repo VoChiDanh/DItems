@@ -41,12 +41,12 @@ public class NBTItem {
         return getID() != null;
     }
 
-    public boolean isVanilla() {
-        return !nbtItem.hasCustomNbtData() && !nbtItem.hasNBTData();
+    public boolean hasData() {
+        return nbtItem.hasCustomNbtData() || nbtItem.hasNBTData();
     }
 
     public double getStats(String stats) {
-        return nbtItem.getDouble("DITEMS_STATS_" + stats.toUpperCase());
+        return nbtItem.getItem() != null ? nbtItem.getDouble("DITEMS_STATS_" + stats.toUpperCase()) : 0;
     }
 
     public boolean hasStats(String stats) {

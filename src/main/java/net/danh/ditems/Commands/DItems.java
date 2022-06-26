@@ -179,11 +179,10 @@ public class DItems extends CMDBase {
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("stats") || args[0].equalsIgnoreCase("show")) {
-                    commands.add("damage");
-                    commands.add("armor");
-                    StringUtil.copyPartialMatches(args[1], commands, completions);
+                    StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(new Files("stats").getConfig().getConfigurationSection("STATS")).getKeys(false), completions);
                 }
             }
+
         }
         Collections.sort(completions);
         return completions;

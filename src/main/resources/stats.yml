@@ -1,5 +1,7 @@
 STATS:
   DAMAGE: "&7Damage: &a#amount#"
   ARMOR: "&7Armor: &a#amount#"
+  MAX_HEALTH: "&7Max Health: &c#amount#"
+  HEALTH_REGEN: "&7Health Regen: &c#amount#"
 FORMULA:
   DAMAGE: "#damage# - ((#armor# # #damage#) * #damage#)"
