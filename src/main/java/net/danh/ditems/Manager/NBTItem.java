@@ -28,6 +28,11 @@ public class NBTItem {
         return nbtItem.getString("DITEMS_ID");
     }
 
+    public void setID(String id) {
+        nbtItem.setString("DITEMS_ID", id.toUpperCase());
+        nbtItem.applyNBT(item);
+    }
+
     public boolean isDItems() {
         return getID() != null;
     }
@@ -42,11 +47,6 @@ public class NBTItem {
 
     public boolean hasStats(String stats) {
         return getStats(stats) >= 1d;
-    }
-
-    public void setID(String id) {
-        nbtItem.setString("DITEMS_ID", id.toUpperCase());
-        nbtItem.applyNBT(item);
     }
 
     public void setName(String name) {

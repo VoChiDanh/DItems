@@ -2,7 +2,6 @@ package net.danh.ditems.Manager;
 
 import net.danh.dcore.Utils.Chat;
 import net.danh.dcore.Utils.Items;
-import net.danh.ditems.Resource.Files;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

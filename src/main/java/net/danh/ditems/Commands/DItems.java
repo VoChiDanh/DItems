@@ -1,20 +1,30 @@
 package net.danh.ditems.Commands;
 
 import net.danh.dcore.Commands.CMDBase;
+import net.danh.dcore.Utils.File;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.PlayerData.Armor;
 import net.danh.ditems.Resource.Files;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static net.danh.dcore.Random.Number.isInteger;
+import static net.danh.dcore.Utils.Player.sendConsoleMessage;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
-public class DItems extends CMDBase {
+public class DItems extends CMDBase implements TabCompleter {
     public DItems(JavaPlugin core) {
         super(core, "ditems");
     }
@@ -22,9 +32,26 @@ public class DItems extends CMDBase {
     @Override
     public void playerexecute(Player p, String[] args) {
         if (p.hasPermission("ditems.admin")) {
+            if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("armor")) {
+                    sendPlayerMessage(p, String.valueOf(Armor.getArmor(p)));
+                }
+                if (args[0].equalsIgnoreCase("help")) {
+                    sendPlayerMessage(p, new Files("message").getConfig().getStringList("ADMIN.HELP"));
+                }
+                if (args[0].equalsIgnoreCase("reload")) {
+                    File.updateFile(net.danh.ditems.DItems.getInstance(), new Files("stats").getConfig(), "stats.yml");
+                    File.updateFile(net.danh.ditems.DItems.getInstance(), new Files("message").getConfig(), "message.yml");
+                    new Files("message").save();
+                    new Files("message").load();
+                    new Files("stats").save();
+                    new Files("stats").load();
+                    sendPlayerMessage(p, "&aReloaded");
+                }
+            }
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("show")) {
-                    if (p.getInventory().getItemInMainHand() == null) {
+                    if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {
                         return;
                     }
                     de.tr7zw.changeme.nbtapi.NBTItem nbtItem = new de.tr7zw.changeme.nbtapi.NBTItem(p.getInventory().getItemInMainHand());
@@ -34,7 +61,7 @@ public class DItems extends CMDBase {
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("stats")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
-                    if (item == null) {
+                    if (item.getType() == Material.AIR) {
                         return;
                     }
                     String stats_name = args[1].toUpperCase();
@@ -56,7 +83,7 @@ public class DItems extends CMDBase {
                 if (args[0].equalsIgnoreCase("removelore")) {
                     if (isInteger(args[1])) {
                         ItemStack item = p.getInventory().getItemInMainHand();
-                        if (item == null) {
+                        if (item.getType() == Material.AIR) {
                             return;
                         }
                         int line = Integer.parseInt(args[1]);
@@ -67,7 +94,7 @@ public class DItems extends CMDBase {
             if (args.length > 1) {
                 if (args[0].equalsIgnoreCase("setname")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
-                    if (item == null) {
+                    if (item.getType() == Material.AIR) {
                         return;
                     }
                     String name = String.join(" ", Arrays.asList(args).subList(1, args.length));
@@ -75,7 +102,7 @@ public class DItems extends CMDBase {
                 }
                 if (args[0].equalsIgnoreCase("addlore")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
-                    if (item == null) {
+                    if (item.getType() == Material.AIR) {
                         return;
                     }
                     String lore = String.join(" ", Arrays.asList(args).subList(1, args.length));
@@ -85,7 +112,7 @@ public class DItems extends CMDBase {
                     if (isInteger(args[1])) {
                         int line = Integer.parseInt(args[1]);
                         ItemStack item = p.getInventory().getItemInMainHand();
-                        if (item == null) {
+                        if (item.getType() == Material.AIR) {
                             return;
                         }
                         String lore = String.join(" ", Arrays.asList(args).subList(2, args.length));
@@ -98,6 +125,33 @@ public class DItems extends CMDBase {
 
     @Override
     public void consoleexecute(ConsoleCommandSender c, String[] args) {
+        sendConsoleMessage(c, "&cOnly player can do this command!");
+    }
 
+    @Override
+    public List<String> TabComplete(CommandSender sender, String[] args) {
+        List<String> completions = new ArrayList<>();
+        List<String> commands = new ArrayList<>();
+        if (sender.hasPermission("ditems.admin")) {
+            if (args.length == 1) {
+                commands.add("setname");
+                commands.add("setlore");
+                commands.add("addlore");
+                commands.add("removelore");
+                commands.add("stats");
+                commands.add("show");
+                commands.add("help");
+                commands.add("reload");
+                StringUtil.copyPartialMatches(args[0], commands, completions);
+            } else if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("stats") || args[0].equalsIgnoreCase("show")) {
+                    commands.add("damage");
+                    commands.add("armor");
+                    StringUtil.copyPartialMatches(args[1], commands, completions);
+                }
+            }
+        }
+        Collections.sort(completions);
+        return completions;
     }
 }

@@ -1,2 +1,10 @@
 ADMIN:
   SET_STATS: "&6#item# now have &9#stats_amount# #stats_name#"
+  HELP:
+    - "&9/ditems setname [name] - Set name"
+    - "&9/ditems reload - Reload file"
+    - "&9/ditems show [stats] - Show amount of stats in hand"
+    - "&9/ditems stats [stats] [number] - Set stats of item in hand"
+    - "&9/ditems addlore [lore] - Add lore"
+    - "&9/ditems removelore [line] - Remove lore"
+    - "&9/ditems setlore [line] [name] - Set lore"
