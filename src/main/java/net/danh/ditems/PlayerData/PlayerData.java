@@ -16,6 +16,9 @@ public class PlayerData {
         p.setHealthScaled(true);
         if (attribute != null) {
             attribute.setBaseValue(20 + PlayerData.getPlayerStats(p, "MAX_HEALTH"));
+            if (p.getHealth() > attribute.getBaseValue()) {
+                p.setHealth(attribute.getBaseValue());
+            }
         }
     }
 
@@ -90,7 +93,7 @@ public class PlayerData {
                 boots_stats += stats;
             }
         }
-        if (item != null && item.getType() != Material.AIR) {
+        if (item.getType() != Material.AIR) {
             if (new NBTItem(item).hasStats(stats_name.toUpperCase())) {
                 double stats = new NBTItem(item).getStats(stats_name.toUpperCase());
                 item_stats += stats;
