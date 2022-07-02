@@ -182,7 +182,6 @@ public class DItems extends CMDBase {
                     StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(new Files("stats").getConfig().getConfigurationSection("STATS")).getKeys(false), completions);
                 }
             }
-
         }
         Collections.sort(completions);
         return completions;
