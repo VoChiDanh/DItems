@@ -5,10 +5,13 @@ import net.danh.dcore.Utils.Chat;
 import net.danh.dcore.Utils.Items;
 import net.danh.ditems.DItems;
 import net.danh.ditems.Resource.Files;
+import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +36,7 @@ public class NBTItem {
     }
 
     public void setID(String id) {
-        nbtItem.setString("DITEMS_ID", id.toUpperCase());
+        nbtItem.setString("DITEMS_ID_", id.toUpperCase());
         nbtItem.applyNBT(item);
     }
 
@@ -45,12 +48,20 @@ public class NBTItem {
         return nbtItem.hasCustomNbtData() || nbtItem.hasNBTData();
     }
 
-    public double getStats(String stats) {
+    public double getDoubleStats(String stats) {
         return nbtItem.getItem() != null ? nbtItem.getDouble("DITEMS_STATS_" + stats.toUpperCase()) : 0;
     }
 
-    public boolean hasStats(String stats) {
-        return getStats(stats) >= 1d;
+    public boolean hasDoubleStats(String stats) {
+        return getDoubleStats(stats) >= 1d;
+    }
+
+    public List<String> getStringListStats(String stats) {
+        return nbtItem.getItem() != null ? nbtItem.getStringList("DITEMS_STATS_" + stats.toUpperCase()) : null;
+    }
+
+    public boolean hasStringListStats(String stats) {
+        return getStringListStats(stats) != null;
     }
 
     public void setName(String name) {
@@ -72,6 +83,7 @@ public class NBTItem {
         new_lore.add(lore);
         im.setLore(Items.Lore(new_lore));
         nbtItem.getItem().setItemMeta(im);
+        nbtItem.getStringList("DITEMS_STATS_LORE").add(Chat.colorize(lore));
         nbtItem.applyNBT(item);
     }
 
@@ -84,6 +96,7 @@ public class NBTItem {
                 new_lore.set(line, Chat.colorize(lore));
                 im.setLore(new_lore);
                 nbtItem.getItem().setItemMeta(im);
+                nbtItem.getStringList("DITEMS_STATS_LORE").set(line, Chat.colorize(lore));
                 nbtItem.applyNBT(item);
             }
         }
@@ -98,6 +111,7 @@ public class NBTItem {
                 new_lore.remove(new_lore.get(line));
                 im.setLore(new_lore);
                 nbtItem.getItem().setItemMeta(im);
+                nbtItem.getStringList("DITEMS_STATS_LORE").remove(new_lore.get(line));
                 nbtItem.applyNBT(item);
             }
         }
@@ -141,8 +155,8 @@ public class NBTItem {
         } else {
             List<String> lore = im.getLore();
             for (int i = 0; i < lore.size(); i++) {
-                if (lore.contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getStats(stats.toUpperCase())))))) {
-                    if (lore.get(i).contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getStats(stats.toUpperCase())))))) {
+                if (lore.contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
+                    if (lore.get(i).contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
                         lore.set(i, Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
                         im.setLore(lore);
                         nbtItem.getItem().setItemMeta(im);
@@ -161,4 +175,38 @@ public class NBTItem {
             }
         }
     }
+
+    public void setInfinityDurability(Boolean type) {
+        ItemMeta im = nbtItem.getItem().getItemMeta();
+        im.setUnbreakable(type);
+        nbtItem.getItem().setItemMeta(im);
+        nbtItem.applyNBT(item);
+    }
+
+    public void setLeatherArmorColor(Color color) {
+        try {
+            LeatherArmorMeta im = (LeatherArmorMeta) nbtItem.getItem().getItemMeta();
+            im.setColor(color);
+            nbtItem.getItem().setItemMeta(im);
+            nbtItem.applyNBT(item);
+        } catch (ClassCastException expected) {
+            throw new RuntimeException(expected);
+        }
+    }
+
+    public void setFlag(ItemFlag... flag) {
+        ItemMeta im = nbtItem.getItem().getItemMeta();
+        im.addItemFlags(flag);
+        nbtItem.getItem().setItemMeta(im);
+        nbtItem.applyNBT(item);
+    }
+
+    public void removeFlag(ItemFlag... flag) {
+        ItemMeta im = nbtItem.getItem().getItemMeta();
+        im.removeItemFlags(flag);
+        nbtItem.getItem().setItemMeta(im);
+        nbtItem.applyNBT(item);
+    }
+
+
 }

@@ -21,14 +21,9 @@ public class FileFolder {
     }
 
     public void load() {
-        File folder = new File(DItems.getInstance().getDataFolder(), foldername);
-
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        this.file = new File(folder, this.name + ".yml");
+        this.file = new File(DItems.getInstance().getDataFolder() + File.separator + foldername, this.name + ".yml");
         if (!this.file.exists()) {
+            this.file.getParentFile().mkdirs();
             try {
                 this.file.createNewFile();
             } catch (Exception e) {

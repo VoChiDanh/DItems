@@ -3,8 +3,10 @@ package net.danh.ditems.Commands;
 import net.danh.dcore.Commands.CMDBase;
 import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.File;
+import net.danh.ditems.API.Items;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.Resource.FileFolder;
 import net.danh.ditems.Resource.Files;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -12,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
@@ -21,6 +24,7 @@ import java.util.*;
 import static net.danh.dcore.Random.Number.isInteger;
 import static net.danh.dcore.Utils.Player.sendConsoleMessage;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
+import static net.danh.ditems.API.Items.saveItems;
 
 public class DItems extends CMDBase {
     public DItems(JavaPlugin core) {
@@ -41,10 +45,37 @@ public class DItems extends CMDBase {
                     new Files("message").load();
                     new Files("stats").save();
                     new Files("stats").load();
+                    new FileFolder("items", "ItemSaved").load();
+                    new FileFolder("items", "ItemSaved").save();
                     sendPlayerMessage(p, "&aReloaded");
                 }
             }
             if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("unbreakable")) {
+                    ItemStack item = p.getInventory().getItemInMainHand();
+                    if (item.getType() == Material.AIR) {
+                        return;
+                    }
+                    new NBTItem(item).setInfinityDurability(Boolean.parseBoolean(args[1]));
+                }
+                if (args[0].equalsIgnoreCase("setflag")) {
+                    ItemStack item = p.getInventory().getItemInMainHand();
+                    if (item.getType() == Material.AIR) {
+                        return;
+                    }
+                    new NBTItem(item).setFlag(ItemFlag.valueOf(args[1]));
+                }
+                if (args[0].equalsIgnoreCase("removeflag")) {
+                    ItemStack item = p.getInventory().getItemInMainHand();
+                    if (item.getType() == Material.AIR) {
+                        return;
+                    }
+                    new NBTItem(item).removeFlag(ItemFlag.valueOf(args[1]));
+                }
+                if (args[0].equalsIgnoreCase("save")) {
+                    saveItems(args[1], p.getInventory().getItemInMainHand());
+                    sendPlayerMessage(p, "&aSaved item with key " + args[1]);
+                }
                 if (args[0].equalsIgnoreCase("show")) {
                     if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {
                         return;
@@ -73,6 +104,13 @@ public class DItems extends CMDBase {
                 }
             }
             if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("load")) {
+                    String key = args[1];
+                    if (isInteger(args[2])) {
+                        int amount = Integer.parseInt(args[2]);
+                        Items.loadItems(p, key, amount);
+                    }
+                }
                 if (args[0].equalsIgnoreCase("stats")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
                     if (item.getType() == Material.AIR) {
@@ -176,10 +214,34 @@ public class DItems extends CMDBase {
                 commands.add("reload");
                 commands.add("addenchant");
                 commands.add("removeenchant");
+                commands.add("save");
+                commands.add("unbreakable");
+                commands.add("setflag");
+                commands.add("removeflag");
+                commands.add("removeflag");
+                commands.add("load");
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("stats") || args[0].equalsIgnoreCase("show")) {
                     StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(new Files("stats").getConfig().getConfigurationSection("STATS")).getKeys(false), completions);
+                }
+                if (args[0].equalsIgnoreCase("load")) {
+                    StringUtil.copyPartialMatches(args[1], new FileFolder("items", "ItemSaved").getConfig().getKeys(false), completions);
+                }
+                if (args[0].equalsIgnoreCase("addenchant") || args[0].equalsIgnoreCase("removeenchant")) {
+                    for (Enchantment enchantment : Enchantment.values()) {
+                        NMSAssistant nms = new NMSAssistant();
+                        if (nms.isVersionGreaterThanOrEqualTo(13)) {
+                            StringUtil.copyPartialMatches(args[1], Collections.singleton(enchantment.getKey().toString()), completions);
+                        } else {
+                            StringUtil.copyPartialMatches(args[1], Collections.singleton(enchantment.getName()), completions);
+                        }
+                    }
+                }
+                if (args[0].equalsIgnoreCase("setflag") || args[0].equalsIgnoreCase("removeflag")) {
+                    for (ItemFlag itemFlag : ItemFlag.values()) {
+                        StringUtil.copyPartialMatches(args[1], Collections.singleton(itemFlag.name()), completions);
+                    }
                 }
             }
         }

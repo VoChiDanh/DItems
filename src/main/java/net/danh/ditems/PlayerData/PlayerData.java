@@ -32,26 +32,26 @@ public class PlayerData {
         double leggings_stats = 0d;
         double boots_stats = 0d;
         if (helmet != null) {
-            if (new NBTItem(helmet).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(helmet).getStats(stats_name.toUpperCase());
+            if (new NBTItem(helmet).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(helmet).getDoubleStats(stats_name.toUpperCase());
                 helmet_stats += stats;
             }
         }
         if (chestplate != null) {
-            if (new NBTItem(chestplate).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(chestplate).getStats(stats_name.toUpperCase());
+            if (new NBTItem(chestplate).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(chestplate).getDoubleStats(stats_name.toUpperCase());
                 chestplate_stats += stats;
             }
         }
         if (leggings != null) {
-            if (new NBTItem(leggings).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(leggings).getStats(stats_name.toUpperCase());
+            if (new NBTItem(leggings).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(leggings).getDoubleStats(stats_name.toUpperCase());
                 leggings_stats += stats;
             }
         }
         if (boots != null) {
-            if (new NBTItem(boots).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(boots).getStats(stats_name.toUpperCase());
+            if (new NBTItem(boots).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(boots).getDoubleStats(stats_name.toUpperCase());
                 boots_stats += stats;
             }
         }
@@ -70,32 +70,32 @@ public class PlayerData {
         double boots_stats = 0d;
         double item_stats = 0d;
         if (helmet != null) {
-            if (new NBTItem(helmet).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(helmet).getStats(stats_name.toUpperCase());
+            if (new NBTItem(helmet).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(helmet).getDoubleStats(stats_name.toUpperCase());
                 helmet_stats += stats;
             }
         }
         if (chestplate != null) {
-            if (new NBTItem(chestplate).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(chestplate).getStats(stats_name.toUpperCase());
+            if (new NBTItem(chestplate).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(chestplate).getDoubleStats(stats_name.toUpperCase());
                 chestplate_stats += stats;
             }
         }
         if (leggings != null) {
-            if (new NBTItem(leggings).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(leggings).getStats(stats_name.toUpperCase());
+            if (new NBTItem(leggings).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(leggings).getDoubleStats(stats_name.toUpperCase());
                 leggings_stats += stats;
             }
         }
         if (boots != null) {
-            if (new NBTItem(boots).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(boots).getStats(stats_name.toUpperCase());
+            if (new NBTItem(boots).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(boots).getDoubleStats(stats_name.toUpperCase());
                 boots_stats += stats;
             }
         }
         if (item.getType() != Material.AIR) {
-            if (new NBTItem(item).hasStats(stats_name.toUpperCase())) {
-                double stats = new NBTItem(item).getStats(stats_name.toUpperCase());
+            if (new NBTItem(item).hasDoubleStats(stats_name.toUpperCase())) {
+                double stats = new NBTItem(item).getDoubleStats(stats_name.toUpperCase());
                 item_stats += stats;
             }
         }

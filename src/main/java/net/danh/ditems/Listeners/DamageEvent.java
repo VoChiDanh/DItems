@@ -25,8 +25,8 @@ public class DamageEvent implements Listener {
             Player p = (Player) killer;
             ItemStack item = p.getInventory().getItemInMainHand();
             if (new NBTItem(item).hasData()) {
-                if (new NBTItem(item).hasStats("DAMAGE")) {
-                    e.setDamage(new NBTItem(item).getStats("DAMAGE"));
+                if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                    e.setDamage(new NBTItem(item).getDoubleStats("DAMAGE"));
                 }
             }
         }
@@ -40,15 +40,15 @@ public class DamageEvent implements Listener {
                 ItemStack leggings = t.getInventory().getLeggings();
                 ItemStack boots = t.getInventory().getBoots();
                 if (new NBTItem(item).hasData()) {
-                    int crit_chance = (int) new NBTItem(item).getStats("CRIT_CHANCE");
-                    int crit_damage = (int) new NBTItem(item).getStats("CRIT_DAMAGE");
+                    int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
+                    int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
                     int chance = Number.getRandomInt(1, 100);
                     if (chance > crit_chance) {
-                        if (new NBTItem(item).hasStats("DAMAGE")) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                             if (helmet == null && chestplate == null && leggings == null && boots == null) {
-                                e.setDamage(new NBTItem(item).getStats("DAMAGE"));
+                                e.setDamage(new NBTItem(item).getDoubleStats("DAMAGE"));
                             } else {
-                                int damage = (int) new NBTItem(item).getStats("DAMAGE");
+                                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
                                 int armor = PlayerData.getArmorStats(t, "ARMOR");
                                 String calculator = Calculator.calculator(Objects.requireNonNull(new Files("stats").getConfig().getString("FORMULA.DAMAGE"))
                                         .replaceAll("#damage#", String.valueOf(damage))
@@ -63,11 +63,11 @@ public class DamageEvent implements Listener {
                             }
                         }
                     } else {
-                        if (new NBTItem(item).hasStats("DAMAGE")) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                             if (helmet == null && chestplate == null && leggings == null && boots == null) {
-                                e.setDamage(new NBTItem(item).getStats("DAMAGE") * crit_damage);
+                                e.setDamage(new NBTItem(item).getDoubleStats("DAMAGE") * crit_damage);
                             } else {
-                                int damage = (int) new NBTItem(item).getStats("DAMAGE") * crit_damage;
+                                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE") * crit_damage;
                                 int armor = PlayerData.getArmorStats(t, "ARMOR");
                                 String calculator = Calculator.calculator(Objects.requireNonNull(new Files("stats").getConfig().getString("FORMULA.DAMAGE"))
                                         .replaceAll("#damage#", String.valueOf(damage))

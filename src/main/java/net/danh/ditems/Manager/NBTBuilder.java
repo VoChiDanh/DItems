@@ -100,6 +100,7 @@ public class NBTBuilder {
         lore.remove(index);
         im.setLore(Items.Lore(lore));
         nbt.getItem().setItemMeta(im);
+        nbt.getStringList("DITEMS_STATS_LORE").remove(index);
         nbt.applyNBT(item);
         return this;
     }
@@ -111,6 +112,7 @@ public class NBTBuilder {
         lore.add(line);
         im.setLore(Items.Lore(lore));
         nbt.getItem().setItemMeta(im);
+        nbt.getStringList("DITEMS_STATS_LORE").add(Chat.colorize(line));
         nbt.applyNBT(item);
         return this;
     }
@@ -121,6 +123,7 @@ public class NBTBuilder {
         lore.set(pos, Chat.colorize(line));
         im.setLore(lore);
         nbt.getItem().setItemMeta(im);
+        nbt.getStringList("DITEMS_STATS_LORE").set(pos, Chat.colorize(line));
         nbt.applyNBT(item);
         return this;
     }
@@ -146,7 +149,7 @@ public class NBTBuilder {
     }
 
     public NBTBuilder setID(String id) {
-        nbt.setString("DITEMS_ID", id);
+        nbt.setString("DITEMS_ID_", id);
         nbt.applyNBT(item);
         return this;
     }
@@ -161,8 +164,8 @@ public class NBTBuilder {
         } else {
             List<String> lore = im.getLore();
             for (int i = 0; i < lore.size(); i++) {
-                if (lore.contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(new net.danh.ditems.Manager.NBTItem(item).getStats(stats.toUpperCase())))))) {
-                    if (lore.get(i).contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(new net.danh.ditems.Manager.NBTItem(item).getStats(stats.toUpperCase())))))) {
+                if (lore.contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(new net.danh.ditems.Manager.NBTItem(item).getDoubleStats(stats.toUpperCase())))))) {
+                    if (lore.get(i).contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(new net.danh.ditems.Manager.NBTItem(item).getDoubleStats(stats.toUpperCase())))))) {
                         lore.set(i, Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
                         im.setLore(lore);
                         nbt.getItem().setItemMeta(im);

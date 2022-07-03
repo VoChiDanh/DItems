@@ -7,6 +7,7 @@ import net.danh.ditems.Listeners.ArmorEquip;
 import net.danh.ditems.Listeners.BlockDispenseArmor;
 import net.danh.ditems.Listeners.DamageEvent;
 import net.danh.ditems.Listeners.HealthRegen;
+import net.danh.ditems.Resource.FileFolder;
 import net.danh.ditems.Resource.Files;
 import net.danh.ditems.Runnable.Health;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,9 +32,8 @@ public final class DItems extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new BlockDispenseArmor(), this);
         }
         new Files("message").load();
-        new Files("message").save();
+        new FileFolder("items", "ItemSaved").load();
         new Files("stats").load();
-        new Files("stats").save();
         File.updateFile(DItems.getInstance(), new Files("stats").getConfig(), "stats.yml");
         File.updateFile(DItems.getInstance(), new Files("message").getConfig(), "message.yml");
         new net.danh.ditems.Commands.DItems(this);
@@ -47,5 +47,6 @@ public final class DItems extends JavaPlugin {
     public void onDisable() {
         new Files("stats").save();
         new Files("message").save();
+        new FileFolder("items", "ItemSaved").save();
     }
 }
