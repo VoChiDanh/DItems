@@ -5,5 +5,20 @@ STATS:
   HEALTH_REGEN: "&7Health Regen: &c#amount#"
   CRIT_CHANCE: "&7Crit Change: &6#amount#%"
   CRIT_DAMAGE: "&7Crit Damage: &6#amount#"
+  PVP_DAMAGE: "&7PvP Damage: &9#amount#"
+  PVE_DAMAGE: "&7PvE Damage: &9#amount#"
+# Summation: "number1 + number 2" ; Ex: "1 + 2" ➙ 3
+# Subtraction: "number1 + number2" ; Ex: "5 - 3" ➙ 2
+# Multiplication: "number1 * number2" ; Ex: "3 * 2" ➙ 6
+# Division: "number 1 / number 2" ; Ex: "10 / 2" ➙ 5
+# Division Remainder: "number1 % number2" ; Ex: "7 % 2" ➙ 1
+# Exponential: "number^exponent" ; Ex: "2^3" ➙ 8
+# Square Root: "@{number}" ; Ex: "@{16}" ➙ 4
+# Percent: "percent # number" ; Ex: 10 # 20 (10% of 20) ➙ 2
+# if target is mob, armor -> return 1 and all formula will apply for mob...
+# placeholder #pvp_damage# will auto return to PvE Damage if target is mob
 FORMULA:
-  DAMAGE: "#damage# - ((#armor# # #damage#) * #damage#)"
+  NORMAL_ATTACK: "#damage# - ((#armor# # #damage#) * #damage#)"
+  CRIT_ATTACK: "#normal_attack# * #crit_damage#"
+  PVP_CRIT_ATTACK: "#crit_attack# + #pvp_damage# # #crit_attack#"
+  PVP_NORMAL_ATTACK: "#normal_attack# + #pvp_damage# # #normal_attack#"
