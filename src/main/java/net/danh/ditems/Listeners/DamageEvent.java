@@ -3,6 +3,7 @@ package net.danh.ditems.Listeners;
 import net.danh.dcore.Random.Number;
 import net.danh.ditems.API.Attack;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.PlayerData.PlayerData;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
@@ -24,7 +25,7 @@ public class DamageEvent implements Listener {
             if (k == null) return;
             ItemStack item = k.getInventory().getItemInMainHand();
             if (new NBTItem(item).hasDoubleStats("REQUIRED_LEVEL")) {
-                if ((int) new NBTItem(item).getDoubleStats("REQUIRED_LEVEL") > k.getLevel()) {
+                if ((int) new NBTItem(item).getDoubleStats("REQUIRED_LEVEL") > PlayerData.getLevel(k)) {
                     e.setDamage(0);
                     e.setCancelled(true);
                     return;
