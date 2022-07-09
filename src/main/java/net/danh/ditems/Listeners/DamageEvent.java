@@ -23,6 +23,13 @@ public class DamageEvent implements Listener {
             Player k = ((Player) killer).getPlayer();
             if (k == null) return;
             ItemStack item = k.getInventory().getItemInMainHand();
+            if (new NBTItem(item).hasDoubleStats("REQUIRED_LEVEL")) {
+                if ((int) new NBTItem(item).getDoubleStats("REQUIRED_LEVEL") > k.getLevel()) {
+                    e.setDamage(0);
+                    e.setCancelled(true);
+                    return;
+                }
+            }
             int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
             int chance = Number.getRandomInt(1, 100);
             if (target instanceof Player) {

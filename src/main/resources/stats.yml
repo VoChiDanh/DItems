@@ -7,6 +7,7 @@ STATS:
   CRIT_DAMAGE: "&7Crit Damage: &6#amount#"
   PVP_DAMAGE: "&7PvP Damage: &9#amount#"
   PVE_DAMAGE: "&7PvE Damage: &9#amount#"
+  REQUIRED_LEVEL: "&7Required Level &c#amount#"
 # Summation: "number1 + number 2" ; Ex: "1 + 2" ➙ 3
 # Subtraction: "number1 + number2" ; Ex: "5 - 3" ➙ 2
 # Multiplication: "number1 * number2" ; Ex: "3 * 2" ➙ 6

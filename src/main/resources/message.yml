@@ -16,3 +16,5 @@ ADMIN:
     - "&9/ditems load [key] [amount] - Load items from file"
     - "&9/ditems setflag [flag] - Add flag"
     - "&9/ditems removeflag [flag] - Remove flag"
+USER:
+  NOT_ENOUGH_LEVEL: "&cYou are not enough level to use this item"

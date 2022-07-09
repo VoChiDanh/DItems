@@ -2,7 +2,6 @@ package net.danh.ditems.Commands;
 
 import net.danh.dcore.Commands.CMDBase;
 import net.danh.dcore.NMS.NMSAssistant;
-import net.danh.dcore.Utils.File;
 import net.danh.ditems.API.Items;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
@@ -39,14 +38,18 @@ public class DItems extends CMDBase {
                     sendPlayerMessage(p, new Files("message").getConfig().getStringList("ADMIN.HELP"));
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
-                    File.updateFile(net.danh.ditems.DItems.getInstance(), new Files("stats").getConfig(), "stats.yml");
-                    File.updateFile(net.danh.ditems.DItems.getInstance(), new Files("message").getConfig(), "message.yml");
-                    new Files("message").save();
-                    new Files("message").load();
-                    new Files("stats").save();
-                    new Files("stats").load();
-                    new FileFolder("items", "ItemSaved").load();
-                    new FileFolder("items", "ItemSaved").save();
+                    Files message = new Files("message");
+                    FileFolder items = new FileFolder("items", "ItemSaved");
+                    Files stats = new Files("stats");
+                    Files config = new Files("config");
+                    message.save();
+                    message.load();
+                    items.save();
+                    items.load();
+                    stats.save();
+                    stats.load();
+                    config.save();
+                    config.load();
                     sendPlayerMessage(p, "&aReloaded");
                 }
             }
