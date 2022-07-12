@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
+import static net.danh.ditems.Resource.Resource.getMessage;
 
 public class EquipArmor implements Listener {
 
@@ -19,7 +20,7 @@ public class EquipArmor implements Listener {
         if (e.getNewArmorPiece() != null && e.getNewArmorPiece().getType() != Material.AIR) {
             if (new NBTItem(e.getNewArmorPiece()).hasDoubleStats("REQUIRED_LEVEL")) {
                 if ((int) new NBTItem(e.getNewArmorPiece()).getDoubleStats("REQUIRED_LEVEL") > PlayerData.getLevel(p)) {
-                    sendPlayerMessage(p, new Files("message").getConfig().getString("USER.NOT_ENOUGH_LEVEL"));
+                    sendPlayerMessage(p, getMessage().getString("USER.NOT_ENOUGH_LEVEL"));
                 }
             }
         }

@@ -24,6 +24,7 @@ import static net.danh.dcore.Random.Number.isInteger;
 import static net.danh.dcore.Utils.Player.sendConsoleMessage;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 import static net.danh.ditems.API.Items.saveItems;
+import static net.danh.ditems.Resource.Resource.getMessage;
 
 public class DItems extends CMDBase {
     public DItems(JavaPlugin core) {
@@ -35,7 +36,7 @@ public class DItems extends CMDBase {
         if (p.hasPermission("ditems.admin")) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("help")) {
-                    sendPlayerMessage(p, new Files("message").getConfig().getStringList("ADMIN.HELP"));
+                    sendPlayerMessage(p, getMessage().getStringList("ADMIN.HELP"));
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
                     Files message = new Files("message");
@@ -125,7 +126,7 @@ public class DItems extends CMDBase {
                         for (String name : Objects.requireNonNull(new Files("stats").getConfig().getConfigurationSection("STATS")).getKeys(false)) {
                             if (name.equalsIgnoreCase(stats_name)) {
                                 new NBTItem(item).setStats(stats_name, amount);
-                                sendPlayerMessage(p, Objects.requireNonNull(new Files("message").getConfig().getString("ADMIN.SET_STATS")).replaceAll("#item#", p.getInventory().getItemInMainHand().getType().toString()).replaceAll("#stats_amount#", args[2]).replaceAll("#stats_name#", args[1]));
+                                sendPlayerMessage(p, Objects.requireNonNull(getMessage().getString("ADMIN.SET_STATS")).replaceAll("#item#", p.getInventory().getItemInMainHand().getType().toString()).replaceAll("#stats_amount#", args[2]).replaceAll("#stats_name#", args[1]));
                             }
                         }
                     }

@@ -11,16 +11,24 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
+import static net.danh.ditems.Resource.Resource.getConfig;
+
 public class PlayerData {
 
+    /**
+     * @param p Player
+     * @return Player Level
+     */
     public static int getLevel(Player p) {
-        Files config = new Files("config");
-        if (Objects.requireNonNull(config.getConfig().getString("SETTINGS.LEVEL")).equalsIgnoreCase("VANILLA")) {
+        if (Objects.requireNonNull(getConfig().getString("SETTINGS.LEVEL")).equalsIgnoreCase("VANILLA")) {
             return p.getLevel();
         }
         return 0;
     }
 
+    /**
+     * @param p Player
+     */
     public static void updateHealth(Player p) {
         AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         p.setHealthScale(20);
@@ -33,6 +41,11 @@ public class PlayerData {
         }
     }
 
+    /**
+     * @param p Player
+     * @param stats_name Stats Name
+     * @return Amount of stats from helmet, chestplate, leggings, boots
+     */
     public static int getArmorStats(Player p, String stats_name) {
         ItemStack helmet = p.getInventory().getHelmet();
         ItemStack chestplate = p.getInventory().getChestplate();
@@ -105,6 +118,11 @@ public class PlayerData {
         return Integer.parseInt(Calculator.calculator(String.valueOf((int) (helmet_stats + chestplate_stats + leggings_stats + boots_stats)), 0));
     }
 
+    /**
+     * @param p Player
+     * @param stats_name Stats Name
+     * @return Amount of stats from helmet, chestplate, leggings, boots, main hand
+     */
     public static int getPlayerStats(Player p, String stats_name) {
         ItemStack helmet = p.getInventory().getHelmet();
         ItemStack chestplate = p.getInventory().getChestplate();

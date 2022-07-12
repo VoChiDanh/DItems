@@ -15,6 +15,11 @@ import java.util.Objects;
 
 public class Items {
 
+    /**
+     * @param p Player
+     * @param key Item Key
+     * @param amount Amount
+     */
     public static void loadItems(Player p, String key, Integer amount) {
         FileFolder get = new FileFolder("items", "ItemSaved");
         if (get.getConfig().getConfigurationSection(key) != null) {
@@ -26,6 +31,7 @@ public class Items {
                 item = new ItemStack(Material.STONE, 1);
             }
             NBTItem nbt = new NBTItem(item);
+            nbt.setID(key);
             if (get.getConfig().getConfigurationSection(key + ".Enchantments") != null) {
                 for (String enchant : Objects.requireNonNull(get.getConfig().getConfigurationSection(key + ".Enchantments")).getKeys(false)) {
                     nbt.addEnchants(enchant, get.getConfig().getInt(key + ".Enchantments." + enchant));
@@ -56,6 +62,10 @@ public class Items {
         }
     }
 
+    /**
+     * @param key Item Key
+     * @param item ItemStack
+     */
     public static void saveItems(String key, ItemStack item) {
         FileFolder get = new FileFolder("items", "ItemSaved");
         get.getConfig().set(key + ".Material", item.getType().toString());
