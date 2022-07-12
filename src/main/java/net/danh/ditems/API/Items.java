@@ -16,8 +16,8 @@ import java.util.Objects;
 public class Items {
 
     /**
-     * @param p Player
-     * @param key Item Key
+     * @param p      Player
+     * @param key    Item Key
      * @param amount Amount
      */
     public static void loadItems(Player p, String key, Integer amount) {
@@ -58,12 +58,15 @@ public class Items {
                     nbt.addLore(lore);
                 }
             }
+            if (get.getConfig().getString(key + ".Custom_Model_Data") != null) {
+                nbt.setCustomModelData(get.getConfig().getString(key + ".Custom_Model_Data"));
+            }
             p.getInventory().addItem(item);
         }
     }
 
     /**
-     * @param key Item Key
+     * @param key  Item Key
      * @param item ItemStack
      */
     public static void saveItems(String key, ItemStack item) {
@@ -88,10 +91,18 @@ public class Items {
         if (new NBTItem(item).hasStringListStats("LORE")) {
             get.getConfig().set(key + ".Lore", new NBTItem(item).getStringListStats("LORE"));
         }
+        if (item.getDurability() != 0) {
+            get.getConfig().set(key + ".Custom_Model_Data", item.getDurability());
+        }
         if (item.getItemMeta() != null) {
             for (ItemFlag flag : ItemFlag.values()) {
                 if (item.getItemMeta().hasItemFlag(flag)) {
                     get.getConfig().set(key + ".Flag." + flag, true);
+                }
+            }
+            if (nms.isVersionGreaterThanOrEqualTo(14)) {
+                if (item.getItemMeta().hasCustomModelData()) {
+                    get.getConfig().set(key + ".Custom_Model_Data", item.getItemMeta().getCustomModelData());
                 }
             }
             if (item.getItemMeta().isUnbreakable()) {

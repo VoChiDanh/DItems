@@ -208,5 +208,16 @@ public class NBTItem {
         nbtItem.applyNBT(item);
     }
 
+    public void setCustomModelData(String data) {
+        NMSAssistant nms = new NMSAssistant();
+        if (nms.isVersionGreaterThanOrEqualTo(14)) {
+            ItemMeta im = nbtItem.getItem().getItemMeta();
+            im.setCustomModelData(Integer.getInteger(data));
+            nbtItem.getItem().setItemMeta(im);
+        } else {
+            nbtItem.getItem().setDurability(Short.parseShort(data));
+        }
+        nbtItem.applyNBT(item);
+    }
 
 }

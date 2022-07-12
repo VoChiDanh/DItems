@@ -2,7 +2,6 @@ package net.danh.ditems.PlayerData;
 
 import net.danh.dcore.Calculator.Calculator;
 import net.danh.ditems.Manager.NBTItem;
-import net.danh.ditems.Resource.Files;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -42,7 +41,7 @@ public class PlayerData {
     }
 
     /**
-     * @param p Player
+     * @param p          Player
      * @param stats_name Stats Name
      * @return Amount of stats from helmet, chestplate, leggings, boots
      */
@@ -119,7 +118,7 @@ public class PlayerData {
     }
 
     /**
-     * @param p Player
+     * @param p          Player
      * @param stats_name Stats Name
      * @return Amount of stats from helmet, chestplate, leggings, boots, main hand
      */

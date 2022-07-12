@@ -59,6 +59,7 @@ public class ArmorEquipEvent extends PlayerEvent {
     /**
      * Returns the last equipped armor piece, could be a piece of armor,
      * {@link Material#AIR}, or null.
+     *
      * @return Old Armor
      */
     public final ItemStack getOldArmor() {
@@ -68,6 +69,7 @@ public class ArmorEquipEvent extends PlayerEvent {
     /**
      * Returns the newly equipped armor, could be a piece of armor,
      * {@link Material#AIR}, or null.
+     *
      * @return New Armor
      */
     public final ItemStack getNewArmorPiece() {

@@ -17,7 +17,7 @@ public class Attack {
      * @param e EntityDamageByEntityEvent
      * @param k Killer (Player)
      * @param t Target (Player/null)
-     * Stats: Damage, Crit_Damage, Crit_Chance, Armor
+     *          Stats: Damage, Crit_Damage, Crit_Chance, Armor
      */
     public static void CritAttack(EntityDamageByEntityEvent e, Player k, Player t) {
         ItemStack item = k.getInventory().getItemInMainHand();
@@ -46,7 +46,7 @@ public class Attack {
      * @param e EntityDamageByEntityEvent
      * @param k Killer (Player)
      * @param t Target (Player/null)
-     * Stats: Damage, Armor
+     *          Stats: Damage, Armor
      */
     public static void NormalAttack(EntityDamageByEntityEvent e, Player k, Player t) {
         ItemStack item = k.getInventory().getItemInMainHand();
@@ -73,7 +73,7 @@ public class Attack {
      * @param e EntityDamageByEntityEvent
      * @param k Killer (Player)
      * @param t Target (Player/null)
-     * Stats: Damage, Armor, Crit_Damage, Crit_Chance, PvP_Damage (t == Player) / PvE_Damage (t == null)
+     *          Stats: Damage, Armor, Crit_Damage, Crit_Chance, PvP_Damage (t == Player) / PvE_Damage (t == null)
      */
     public static void PvPCritAttack(EntityDamageByEntityEvent e, Player k, Player t) {
         ItemStack item = k.getInventory().getItemInMainHand();
@@ -105,7 +105,7 @@ public class Attack {
      * @param e EntityDamageByEntityEvent
      * @param k Killer (Player)
      * @param t Target (Player/null)
-     * Stats: Damage, Armor, PvP_Damage (t == Player) / PvE_Damage (t == null)
+     *          Stats: Damage, Armor, PvP_Damage (t == Player) / PvE_Damage (t == null)
      */
     public static void PvPNormalAttack(EntityDamageByEntityEvent e, Player k, Player t) {
         ItemStack item = k.getInventory().getItemInMainHand();

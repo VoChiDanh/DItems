@@ -76,6 +76,13 @@ public class DItems extends CMDBase {
                     }
                     new NBTItem(item).removeFlag(ItemFlag.valueOf(args[1]));
                 }
+                if (args[0].equalsIgnoreCase("custom_model_data")) {
+                    ItemStack item = p.getInventory().getItemInMainHand();
+                    if (item.getType() == Material.AIR) {
+                        return;
+                    }
+                    new NBTItem(item).setCustomModelData(args[1]);
+                }
                 if (args[0].equalsIgnoreCase("save")) {
                     saveItems(args[1], p.getInventory().getItemInMainHand());
                     sendPlayerMessage(p, "&aSaved item with key " + args[1]);
@@ -224,6 +231,7 @@ public class DItems extends CMDBase {
                 commands.add("removeflag");
                 commands.add("removeflag");
                 commands.add("load");
+                commands.add("custom_model_data");
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("stats") || args[0].equalsIgnoreCase("show")) {

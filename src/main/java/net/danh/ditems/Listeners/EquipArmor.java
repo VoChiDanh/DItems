@@ -3,7 +3,6 @@ package net.danh.ditems.Listeners;
 import net.danh.ditems.API.ArmorEquipEvent;
 import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.PlayerData.PlayerData;
-import net.danh.ditems.Resource.Files;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
