@@ -38,6 +38,14 @@ public class Items {
                     nbt.addEnchants(enchant, get.getConfig().getInt(key + ".Enchantments." + enchant));
                 }
             }
+            if (get.getConfig().getConfigurationSection(key + ".Ability") != null) {
+                for (String list : Objects.requireNonNull(get.getConfig().getConfigurationSection(key + ".Ability")).getKeys(false)) {
+                    for (String cmd : Objects.requireNonNull(get.getConfig().getConfigurationSection(key + ".Ability." + list)).getKeys(false)) {
+                        Integer delay = get.getConfig().getInt(key + ".Ability." + list + "." + cmd);
+                        nbt.addAbilityCommand(list, cmd, delay);
+                    }
+                }
+            }
             if (get.getConfig().getConfigurationSection(key + ".Stats") != null) {
                 for (String stats : Objects.requireNonNull(get.getConfig().getConfigurationSection(key + ".Stats")).getKeys(false)) {
                     nbt.setStats(stats, get.getConfig().getDouble(key + ".Stats." + stats));
@@ -87,6 +95,12 @@ public class Items {
             double level = nbt.getDoubleStats(stats);
             if (nbt.hasDoubleStats(stats) && level > 0d) {
                 get.getConfig().set(key + ".Stats." + stats, level);
+            }
+        }
+        for (String click_type : new Files(DItems.getInstance(), "config").getConfig().getStringList("ACTION")) {
+            de.tr7zw.changeme.nbtapi.NBTItem nbtItem = new de.tr7zw.changeme.nbtapi.NBTItem(item);
+            if (nbtItem.getString("CLICK_" + click_type) != null && nbtItem.getString("CMD_" + click_type) != null) {
+                get.getConfig().set(key + ".Ability." + click_type + "." + nbtItem.getString("CMD_" + click_type), nbtItem.getInteger("DELAY_" + click_type));
             }
         }
         if (new NBTItem(item).hasStringListStats("LORE")) {

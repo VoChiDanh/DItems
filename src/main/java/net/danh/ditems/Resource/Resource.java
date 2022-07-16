@@ -14,27 +14,35 @@ public class Resource {
      * @return Config File
      */
     public static FileConfiguration getConfig() {
-        return new Files(DItems.getInstance(), "config").getConfig();
+        Files file = new Files(DItems.getInstance(), "config");
+        file.load();
+        return file.getConfig();
     }
 
     /**
      * @return Message File
      */
     public static FileConfiguration getMessage() {
-        return new Files(DItems.getInstance(), "message").getConfig();
+        Files file = new Files(DItems.getInstance(), "message");
+        file.load();
+        return file.getConfig();
     }
 
     /**
      * @return Stats File
      */
     public static FileConfiguration getStats() {
-        return new Files(DItems.getInstance(), "stats").getConfig();
+        Files file = new Files(DItems.getInstance(), "stats");
+        file.load();
+        return file.getConfig();
     }
 
     /**
      * @return CMD File
      */
     public static FileConfiguration getCMD() {
-        return new FileFolder(DItems.getInstance(), "cmd", "Ability").getConfig();
+        FileFolder file = new FileFolder(DItems.getInstance(), "cmd", "Ability");
+        file.load();
+        return file.getConfig();
     }
 }

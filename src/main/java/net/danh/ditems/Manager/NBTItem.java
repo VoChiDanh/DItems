@@ -63,7 +63,7 @@ public class NBTItem {
     }
 
     public boolean hasStringListStats(String stats) {
-        return getStringListStats(stats) != null;
+        return !nbtItem.getStringList(stats).isEmpty();
     }
 
     public void setName(String name) {
@@ -153,39 +153,28 @@ public class NBTItem {
             return;
         }
         if (im.getLore() == null) return;
-        if (nbtItem.getStringList("ability_command").isEmpty()) return;
-
         List<String> lore = im.getLore();
         for (int i = 0; i < lore.size(); i++) {
-            List<String> abi = getAbilityCommand();
-            if (!abi.isEmpty()) {
-                for (String a : abi) {
-                    String[] spi = a.split(";");
-                    if (spi[1].equalsIgnoreCase(action)) {
-                        if (lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(spi[2] + ".DISPLAY")))
-                                .replaceAll("#delay#", String.valueOf(spi[3]))))) {
-                            if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                    .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                    .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(spi[2] + ".DISPLAY")))
-                                    .replaceAll("#delay#", String.valueOf(spi[3]))))) {
-                                lore.remove(lore.get(i));
-                                im.setLore(lore);
-                                nbtItem.getItem().setItemMeta(im);
-                                nbtItem.getStringList("ability_command").remove(nbtItem.getStringList("ability_command").get(i));
-                                nbtItem.applyNBT(item);
-                            }
-                        }
+            if (action.equals(nbtItem.getString("CLICK"))) {
+                if (lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                        .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                        .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                        .replaceAll("#delay#", String.valueOf(nbtItem.getString("CLICK")))))) {
+                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                            .replaceAll("#delay#", String.valueOf(nbtItem.getString("CLICK")))))) {
+                        lore.remove(lore.get(i));
+                        im.setLore(lore);
+                        nbtItem.getItem().setItemMeta(im);
+                        nbtItem.removeKey(action);
+                        nbtItem.applyNBT(item);
                     }
                 }
             }
         }
     }
 
-    public List<String> getAbilityCommand() {
-        return nbtItem.getItem() != null ? nbtItem.getStringList("ability_command") : null;
-    }
 
     public void addAbilityCommand(String action, String command, Integer delay) {
         ItemMeta im = nbtItem.getItem().getItemMeta();
@@ -195,47 +184,42 @@ public class NBTItem {
                     .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
                     .replaceAll("#delay#", String.valueOf(delay)))));
             nbtItem.getItem().setItemMeta(im);
-            nbtItem.getStringList("ability_command").add("CMD;" + action + ";" + command + ";" + delay);
+            nbtItem.setString("CMD_" + action, command);
+            nbtItem.setInteger("DELAY_" + action, delay);
             nbtItem.applyNBT(item);
         } else {
             List<String> lore = im.getLore();
             for (int i = 0; i < lore.size(); i++) {
-                List<String> abi = getAbilityCommand();
-                if (!abi.isEmpty()) {
-                    for (String a : abi) {
-                        String[] spi = a.split(";");
-                        if (spi[1].equalsIgnoreCase(action)) {
-                            if (lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                    .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                    .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(spi[2] + ".DISPLAY")))
-                                    .replaceAll("#delay#", String.valueOf(spi[3]))))) {
-                                if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                        .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                        .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(spi[2] + ".DISPLAY")))
-                                        .replaceAll("#delay#", String.valueOf(spi[3]))))) {
-                                    lore.set(i, Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
-                                            .replaceAll("#delay#", String.valueOf(delay))));
-                                    im.setLore(lore);
-                                    nbtItem.getItem().setItemMeta(im);
-                                    nbtItem.getStringList("ability_command").set(i, "CMD;" + action + ";" + command + ";" + delay);
-                                    nbtItem.applyNBT(item);
-                                    break;
-                                }
-                            } else {
-                                lore.add(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                        .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                        .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
-                                        .replaceAll("#delay#", String.valueOf(delay))));
-                                im.setLore(lore);
-                                nbtItem.getItem().setItemMeta(im);
-                                nbtItem.getStringList("ability_command").add("CMD;" + action + ";" + command + ";" + delay);
-                                nbtItem.applyNBT(item);
-                                break;
-                            }
-                        }
+                if (action.equals(nbtItem.getString("CLICK")) && lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                        .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                        .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                        .replaceAll("#delay#", String.valueOf(nbtItem.getString("DELAY")))))) {
+                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                            .replaceAll("#delay#", String.valueOf(nbtItem.getString("DELAY")))))) {
+                        lore.set(i, Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                                .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                                .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                                .replaceAll("#delay#", String.valueOf(delay))));
+                        im.setLore(lore);
+                        nbtItem.getItem().setItemMeta(im);
+                        nbtItem.setString("CMD_" + action, command);
+                        nbtItem.setInteger("DELAY_" + action, delay);
+                        nbtItem.applyNBT(item);
+                        break;
                     }
+                } else {
+                    lore.add(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                            .replaceAll("#delay#", String.valueOf(delay)));
+                    im.setLore(Items.Lore(lore));
+                    nbtItem.getItem().setItemMeta(im);
+                    nbtItem.setString("CMD_" + action, command);
+                    nbtItem.setInteger("DELAY_" + action, delay);
+                    nbtItem.applyNBT(item);
+                    break;
                 }
             }
         }

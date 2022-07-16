@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,24 +17,17 @@ public class Ability {
 
     private static final Set<String> cooldown = new HashSet<>();
 
-    public static void executeCMD(Player p, List<String> ability) {
-        if (!ability.isEmpty()) {
-            for (String a : ability) {
-                String[] cmd = a.split(";");
-                if (cmd[0].equalsIgnoreCase("CMD")) {
-                    if (cooldown.contains(p.getName() + "_" + cmd[2])) {
-                        sendPlayerMessage(p, Objects.requireNonNull(Resource.getMessage().getString("USER.DELAY")).replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(cmd[2] + ".DISPLAY"))));
-                        return;
-                    }
-                    for (String list_command : Resource.getCMD().getStringList(cmd[2] + ".COMMAND")) {
-                        String papi = PlaceholderAPI.setPlaceholders(p, list_command);
-                        Bukkit.getServer().dispatchCommand(DItems.getInstance().getServer().getConsoleSender(), papi);
-                        cooldown.add(p.getName() + "_" + cmd[2]);
-                    }
-                    new RemoveCooldown(p.getName() + "_" + cmd[2]).runTaskLater(DItems.getInstance(), Integer.parseInt(cmd[3]) * 20L);
-                }
-            }
+    public static void executeCMD(Player p, String cmd, Integer delay) {
+        if (cooldown.contains(p.getName() + "_" + cmd)) {
+            sendPlayerMessage(p, Objects.requireNonNull(Resource.getMessage().getString("USER.DELAY")).replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(cmd + ".DISPLAY"))));
+            return;
         }
+        for (String list_command : Resource.getCMD().getStringList(cmd + ".COMMAND")) {
+            String papi = PlaceholderAPI.setPlaceholders(p, list_command);
+            Bukkit.getServer().dispatchCommand(DItems.getInstance().getServer().getConsoleSender(), papi);
+            cooldown.add(p.getName() + "_" + cmd);
+        }
+        new RemoveCooldown(p.getName() + "_" + cmd).runTaskLater(DItems.getInstance(), delay * 20L);
     }
 
     public static class RemoveCooldown extends BukkitRunnable {
