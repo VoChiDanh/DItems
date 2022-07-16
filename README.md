@@ -17,9 +17,12 @@
     - "&9/ditems removeenchant [Enchant] - Remove enchant"
     - "&9/ditems save [Key] - Save items"
     - "&9/ditems unbreakable [true/false] - Set item unbreakable"
+    - "&9/ditems custom_model_data [number] - Set Custom Model Data"
     - "&9/ditems load [key] [amount] - Load items from file"
     - "&9/ditems setflag [flag] - Add flag"
     - "&9/ditems removeflag [flag] - Remove flag"
+    - "&9/ditems ability_command [action] [command] [delay] - Add ability command"
+    - "&9/ditems remove_ability_command [action] - Remove ability command"
 ```
 
 # API
