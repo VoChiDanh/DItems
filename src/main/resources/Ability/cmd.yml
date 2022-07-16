@@ -1,0 +1,4 @@
+EXAMPLE:
+  DISPLAY: "&9Example Command"
+  COMMAND:
+    - broadcast %player_name%

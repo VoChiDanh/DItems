@@ -5,6 +5,7 @@ import net.danh.dcore.Resource.Files;
 import net.danh.dcore.Utils.Chat;
 import net.danh.dcore.Utils.Items;
 import net.danh.ditems.DItems;
+import net.danh.ditems.Resource.Resource;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class NBTItem {
 
@@ -36,7 +38,7 @@ public class NBTItem {
     }
 
     public void setID(String id) {
-        nbtItem.setString("DITEMS_ID_", id.toUpperCase());
+        nbtItem.setString("DITEMS_ID", id.toUpperCase());
         nbtItem.applyNBT(item);
     }
 
@@ -142,6 +144,67 @@ public class NBTItem {
         if (enchant != null && nbtItem.getItem().containsEnchantment(enchant)) {
             nbtItem.getItem().removeEnchantment(enchant);
             nbtItem.applyNBT(item);
+        }
+    }
+
+    public void removeAbilityCommand(String action) {
+        ItemMeta im = nbtItem.getItem().getItemMeta();
+        List<String> lore = im.getLore();
+        for (int i = 0; i < lore.size(); i++) {
+            if (lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action))))) {
+                if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action))))) {
+                    lore.remove(lore.get(i));
+                    im.setLore(lore);
+                    nbtItem.getItem().setItemMeta(im);
+                    nbtItem.getStringList("ability_command").remove(i);
+                    nbtItem.applyNBT(item);
+                    break;
+                }
+            }
+        }
+    }
+
+    public List<String> getAbilityCommand() {
+        return nbtItem.getItem() != null ? nbtItem.getStringList("ability_command") : null;
+    }
+
+    public void addAbilityCommand(String action, String command, Integer delay) {
+        ItemMeta im = nbtItem.getItem().getItemMeta();
+        if (im.getLore() == null) {
+            im.setLore(Items.Lore(Collections.singletonList(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                    .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                    .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                    .replaceAll("#delay#", String.valueOf(delay)))));
+            nbtItem.getItem().setItemMeta(im);
+            nbtItem.getStringList("ability_command").add("CMD;" + action + ";" + command + ";" + delay);
+            nbtItem.applyNBT(item);
+        } else {
+            List<String> lore = im.getLore();
+            for (int i = 0; i < lore.size(); i++) {
+                if (lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action))))) {
+                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action))))) {
+                        lore.set(i, Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                                .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                                .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                                .replaceAll("#delay#", String.valueOf(delay))));
+                        im.setLore(lore);
+                        nbtItem.getItem().setItemMeta(im);
+                        nbtItem.getStringList("ability_command").set(i, "CMD;" + action + ";" + command + ";" + delay);
+                        nbtItem.applyNBT(item);
+                        break;
+                    }
+                } else {
+                    lore.add(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                            .replaceAll("#delay#", String.valueOf(delay))));
+                    im.setLore(lore);
+                    nbtItem.getItem().setItemMeta(im);
+                    nbtItem.getStringList("ability_command").add("CMD;" + action + ";" + command + ";" + delay);
+                    nbtItem.applyNBT(item);
+                    break;
+                }
+            }
         }
     }
 

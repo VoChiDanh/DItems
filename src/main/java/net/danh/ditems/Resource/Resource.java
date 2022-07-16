@@ -1,5 +1,6 @@
 package net.danh.ditems.Resource;
 
+import net.danh.dcore.Resource.FileFolder;
 import net.danh.dcore.Resource.Files;
 import net.danh.ditems.DItems;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,5 +29,12 @@ public class Resource {
      */
     public static FileConfiguration getStats() {
         return new Files(DItems.getInstance(), "stats").getConfig();
+    }
+
+    /**
+     * @return CMD File
+     */
+    public static FileConfiguration getCMD() {
+        return new FileFolder(DItems.getInstance(), "cmd", "Ability").getConfig();
     }
 }

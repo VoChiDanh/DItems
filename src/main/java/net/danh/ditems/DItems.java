@@ -25,14 +25,17 @@ public final class DItems extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ArmorEquip(), this);
         getServer().getPluginManager().registerEvents(new HealthRegen(), this);
         getServer().getPluginManager().registerEvents(new EquipArmor(), this);
+        getServer().getPluginManager().registerEvents(new Interact(), this);
         NMSAssistant nms = new NMSAssistant();
         if (nms.isVersionGreaterThanOrEqualTo(13)) {
             getServer().getPluginManager().registerEvents(new BlockDispenseArmor(), this);
         }
         Files message = new Files(this, "message");
         FileFolder items = new FileFolder(this, "items", "ItemSaved");
+        FileFolder cmd = new FileFolder(this, "cmd", "Ability");
         Files stats = new Files(this, "stats");
         Files config = new Files(this, "config");
+        cmd.load();
         message.load();
         items.load();
         stats.load();
@@ -52,5 +55,6 @@ public final class DItems extends JavaPlugin {
         new Files(this, "stats").save();
         new Files(this, "message").save();
         new FileFolder(this, "items", "ItemSaved").save();
+        new FileFolder(this, "cmd", "Ability").save();
     }
 }

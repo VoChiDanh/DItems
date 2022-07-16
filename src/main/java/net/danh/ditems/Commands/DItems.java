@@ -8,6 +8,7 @@ import net.danh.dcore.Resource.Files;
 import net.danh.ditems.API.Items;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.Resource.Resource;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
@@ -43,6 +44,7 @@ public class DItems extends CMDBase {
                     FileFolder items = new FileFolder(net.danh.ditems.DItems.getInstance(), "items", "ItemSaved");
                     Files stats = new Files(net.danh.ditems.DItems.getInstance(), "stats");
                     Files config = new Files(net.danh.ditems.DItems.getInstance(), "config");
+                    FileFolder cmd = new FileFolder(net.danh.ditems.DItems.getInstance(), "cmd", "Ability");
                     message.save();
                     message.load();
                     items.save();
@@ -51,10 +53,17 @@ public class DItems extends CMDBase {
                     stats.load();
                     config.save();
                     config.load();
+                    cmd.save();
+                    cmd.load();
                     sendPlayerMessage(p, "&aReloaded");
                 }
             }
             if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("remove_ability_command")) {
+                    if (p.getInventory().getItemInMainHand().getType() != Material.AIR) {
+                        new NBTItem(p.getInventory().getItemInMainHand()).removeAbilityCommand(args[1]);
+                    }
+                }
                 if (args[0].equalsIgnoreCase("unbreakable")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
                     if (item.getType() == Material.AIR) {
@@ -166,6 +175,16 @@ public class DItems extends CMDBase {
                     new NBTItem(item).removeLore(line);
                 }
             }
+            if (args.length == 4) {
+                if (args[0].equalsIgnoreCase("ability_command")) {
+                    String action = args[1];
+                    String command = args[2];
+                    Integer delay = Number.getInt(args[3]);
+                    if (p.getInventory().getItemInMainHand().getType() != Material.AIR) {
+                        new NBTItem(p.getInventory().getItemInMainHand()).addAbilityCommand(action, command, delay);
+                    }
+                }
+            }
             if (args.length > 1) {
                 if (args[0].equalsIgnoreCase("setname")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
@@ -224,8 +243,13 @@ public class DItems extends CMDBase {
                 commands.add("removeflag");
                 commands.add("load");
                 commands.add("custom_model_data");
+                commands.add("ability_command");
+                commands.add("remove_ability_command");
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             } else if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("ability_command") || args[0].equalsIgnoreCase("remove_ability_command")) {
+                    StringUtil.copyPartialMatches(args[1], Resource.getConfig().getStringList("ACTION"), completions);
+                }
                 if (args[0].equalsIgnoreCase("stats") || args[0].equalsIgnoreCase("show")) {
                     StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(new Files(net.danh.ditems.DItems.getInstance(), "stats").getConfig().getConfigurationSection("STATS")).getKeys(false), completions);
                 }
@@ -246,6 +270,10 @@ public class DItems extends CMDBase {
                     for (ItemFlag itemFlag : ItemFlag.values()) {
                         StringUtil.copyPartialMatches(args[1], Collections.singleton(itemFlag.name()), completions);
                     }
+                }
+            } else if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("ability_command")) {
+                    StringUtil.copyPartialMatches(args[2], Objects.requireNonNull(Resource.getCMD().getConfigurationSection("")).getKeys(false), completions);
                 }
             }
         }

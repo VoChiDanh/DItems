@@ -17,5 +17,8 @@ ADMIN:
     - "&9/ditems load [key] [amount] - Load items from file"
     - "&9/ditems setflag [flag] - Add flag"
     - "&9/ditems removeflag [flag] - Remove flag"
+    - "&9/ditems ability_command [action] [command] [delay] - Add ability command"
+    - "&9/ditems remove_ability_command [action] - Remove ability command"
 USER:
   NOT_ENOUGH_LEVEL: "&cYou are not enough level to use this item"
+  DELAY: "&cAbility #ability#&c is on cooldown"
