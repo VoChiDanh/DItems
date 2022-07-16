@@ -1,5 +1,7 @@
 package net.danh.ditems.Resource;
 
+import net.danh.dcore.Resource.Files;
+import net.danh.ditems.DItems;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -11,20 +13,20 @@ public class Resource {
      * @return Config File
      */
     public static FileConfiguration getConfig() {
-        return new Files("config").getConfig();
+        return new Files(DItems.getInstance(), "config").getConfig();
     }
 
     /**
      * @return Message File
      */
     public static FileConfiguration getMessage() {
-        return new Files("message").getConfig();
+        return new Files(DItems.getInstance(), "message").getConfig();
     }
 
     /**
      * @return Stats File
      */
     public static FileConfiguration getStats() {
-        return new Files("stats").getConfig();
+        return new Files(DItems.getInstance(), "stats").getConfig();
     }
 }

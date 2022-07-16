@@ -1,10 +1,10 @@
 package net.danh.ditems.Manager;
 
 import net.danh.dcore.NMS.NMSAssistant;
+import net.danh.dcore.Resource.Files;
 import net.danh.dcore.Utils.Chat;
 import net.danh.dcore.Utils.Items;
 import net.danh.ditems.DItems;
-import net.danh.ditems.Resource.Files;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -148,16 +148,16 @@ public class NBTItem {
     public void setStats(String stats, Double number) {
         ItemMeta im = nbtItem.getItem().getItemMeta();
         if (im.getLore() == null) {
-            im.setLore(Items.Lore(Collections.singletonList(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number)))));
+            im.setLore(Items.Lore(Collections.singletonList(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number)))));
             nbtItem.getItem().setItemMeta(im);
             nbtItem.setDouble("DITEMS_STATS_" + stats.toUpperCase(), number);
             nbtItem.applyNBT(item);
         } else {
             List<String> lore = im.getLore();
             for (int i = 0; i < lore.size(); i++) {
-                if (lore.contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
-                    if (lore.get(i).contains(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
-                        lore.set(i, Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
+                if (lore.contains(Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
+                    if (lore.get(i).contains(Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
+                        lore.set(i, Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
                         im.setLore(lore);
                         nbtItem.getItem().setItemMeta(im);
                         nbtItem.setDouble("DITEMS_STATS_" + stats.toUpperCase(), number);
@@ -165,7 +165,7 @@ public class NBTItem {
                         break;
                     }
                 } else {
-                    lore.add(Chat.colorize(new Files("stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
+                    lore.add(Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
                     im.setLore(lore);
                     nbtItem.getItem().setItemMeta(im);
                     nbtItem.setDouble("DITEMS_STATS_" + stats.toUpperCase(), number);
