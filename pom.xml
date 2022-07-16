@@ -39,6 +39,16 @@
                             <shadedPattern>net.danh</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>net/danh/dcore/List/Contain*</exclude>
+                                <exclude>net/danh/dcore/Events/EnchantItemEvent*</exclude>
+                                <exclude>net/danh/dcore/Enchant/Lore*</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -107,7 +117,7 @@
         <dependency>
             <groupId>com.github.D-x-Z</groupId>
             <artifactId>DCore</artifactId>
-            <version>42a5cdc78c</version>
+            <version>17fc35deb4</version>
         </dependency>
         <dependency>
             <groupId>de.tr7zw</groupId>
