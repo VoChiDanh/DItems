@@ -3,6 +3,8 @@ version: '${project.version}'
 main: net.danh.ditems.DItems
 api-version: 1.13
 authors: [ VoChiDanh ]
+depend:
+  - PlaceholderAPI
 commands:
   ditems:
     description: Main CMD

@@ -1,5 +1,6 @@
 package net.danh.ditems.API;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.danh.dcore.Calculator.Calculator;
 import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.PlayerData.PlayerData;
@@ -28,14 +29,16 @@ public class Attack {
             int armor = PlayerData.getArmorStats(t, "ARMOR");
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
         } else {
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
@@ -55,14 +58,16 @@ public class Attack {
             int armor = PlayerData.getArmorStats(t, "ARMOR");
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
         } else {
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
@@ -86,7 +91,8 @@ public class Attack {
             int armor = PlayerData.getArmorStats(t, "ARMOR");
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_CRIT_ATTACK")).replaceAll("#crit_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
@@ -94,7 +100,8 @@ public class Attack {
             pvp_damage = (int) new NBTItem(item).getDoubleStats("PVE_DAMAGE");
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_CRIT_ATTACK")).replaceAll("#crit_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
@@ -116,7 +123,8 @@ public class Attack {
             int armor = PlayerData.getArmorStats(t, "ARMOR");
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_NORMAL_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
@@ -124,7 +132,8 @@ public class Attack {
             pvp_damage = (int) new NBTItem(item).getDoubleStats("PVE_DAMAGE");
             if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
                 String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_NORMAL_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#armor#", String.valueOf(1)), 0);
-                double d_damage = Double.parseDouble(calculator);
+                String papi = PlaceholderAPI.setPlaceholders(k, calculator);
+                double d_damage = Double.parseDouble(papi);
                 int f_damage = (int) d_damage;
                 e.setDamage(Math.max(f_damage, 0));
             }
