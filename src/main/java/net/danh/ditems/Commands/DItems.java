@@ -9,6 +9,7 @@ import net.danh.ditems.API.Items;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.Resource.Resource;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
@@ -40,21 +41,7 @@ public class DItems extends CMDBase {
                     sendPlayerMessage(p, getMessage().getStringList("ADMIN.HELP"));
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
-                    Files message = new Files(net.danh.ditems.DItems.getInstance(), "message");
-                    FileFolder items = new FileFolder(net.danh.ditems.DItems.getInstance(), "items", "ItemSaved");
-                    Files stats = new Files(net.danh.ditems.DItems.getInstance(), "stats");
-                    Files config = new Files(net.danh.ditems.DItems.getInstance(), "config");
-                    FileFolder cmd = new FileFolder(net.danh.ditems.DItems.getInstance(), "cmd", "Ability");
-                    message.save();
-                    message.load();
-                    items.save();
-                    items.load();
-                    stats.save();
-                    stats.load();
-                    config.save();
-                    config.load();
-                    cmd.save();
-                    cmd.load();
+                    Resource.reloadFiles();
                     sendPlayerMessage(p, "&aReloaded");
                 }
             }
@@ -217,7 +204,24 @@ public class DItems extends CMDBase {
 
     @Override
     public void consoleexecute(ConsoleCommandSender c, String[] args) {
-        sendConsoleMessage(c, "&cOnly player can do this command!");
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("help")) {
+                sendConsoleMessage(c, getMessage().getStringList("ADMIN.HELP"));
+            }
+            if (args[0].equalsIgnoreCase("reload")) {
+                Resource.reloadFiles();
+                sendConsoleMessage(c, "&aReloaded");
+            }
+        }
+        if (args.length == 4) {
+            if (args[0].equalsIgnoreCase("load")) {
+                String key = args[1];
+                int amount = Number.getInt(args[2]);
+                Player p = Bukkit.getPlayer(args[3]);
+                if (p == null) return;
+                Items.loadItems(p, key, amount);
+            }
+        }
     }
 
     @Override
