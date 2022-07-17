@@ -3,7 +3,7 @@ STATS:
   ARMOR: "&7Armor: &a#amount#"
   MAX_HEALTH: "&7Max Health: &c#amount#"
   HEALTH_REGEN: "&7Health Regen: &c#amount#"
-  CRIT_CHANCE: "&7Crit Change: &6#amount#%"
+  CRIT_CHANCE: "&7Crit Chance: &6#amount#%"
   CRIT_DAMAGE: "&7Crit Damage: &6#amount#"
   PVP_DAMAGE: "&7PvP Damage: &9#amount#"
   PVE_DAMAGE: "&7PvE Damage: &9#amount#"
