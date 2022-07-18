@@ -5,6 +5,7 @@ import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Resource.FileFolder;
 import net.danh.dcore.Resource.Files;
 import net.danh.dcore.Utils.File;
+import net.danh.ditems.Compatible.PlaceholderAPI;
 import net.danh.ditems.Listeners.*;
 import net.danh.ditems.Runnable.Health;
 import org.bukkit.entity.Entity;
@@ -14,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 import static net.danh.ditems.Listeners.DamageEvent.indicators;
 
@@ -31,6 +33,13 @@ public final class DItems extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
+        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        } else {
+            DCore.dCoreLog("&aEnable mode compatible with &bPlaceholderAPI");
+            new PlaceholderAPI().register();
+        }
         DCore.RegisterDCore(this);
         getServer().getPluginManager().registerEvents(new DamageEvent(), this);
         getServer().getPluginManager().registerEvents(new ArmorEquip(), this);
