@@ -17,9 +17,10 @@ STATS:
 # Square Root: "@{number}" ; Ex: "@{16}" ➙ 4
 # Percent: "percent # number" ; Ex: 10 # 20 (10% of 20) ➙ 2
 # if target is mob, armor -> return 1 and all formula will apply for mob...
-# placeholder #pvp_damage# will auto return to PvE Damage if target is mob
 FORMULA:
-  NORMAL_ATTACK: "#damage# - ((#armor# # #damage#) * #damage#)"
-  CRIT_ATTACK: "#normal_attack# * #crit_damage#"
-  PVP_CRIT_ATTACK: "#crit_attack# + #pvp_damage# # #crit_attack#"
-  PVP_NORMAL_ATTACK: "#normal_attack# + #pvp_damage# # #normal_attack#"
+  NORMAL_ATTACK: "%ditems_stats_DAMAGE% - ((%ditems_stats_ARMOR% # %ditems_stats_DAMAGE%) * %ditems_stats_DAMAGE%)"
+  CRIT_ATTACK: "%normal_attack% * %ditems_stats_CRIT_DAMAGE%"
+  PVP_CRIT_ATTACK: "%crit_attack% + %ditems_stats_PVP_DAMAGE% # %crit_attack%"
+  PVP_NORMAL_ATTACK: "%normal_attack% + %ditems_stats_PVP_DAMAGE% # %normal_attack%"
+  PVE_CRIT_ATTACK: "%crit_attack% + %ditems_stats_PVE_DAMAGE% # %crit_attack%"
+  PVE_NORMAL_ATTACK: "%normal_attack% + %ditems_stats_PVE_DAMAGE% # %normal_attack%"

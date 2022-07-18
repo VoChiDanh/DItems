@@ -1,12 +1,9 @@
 package net.danh.ditems.API;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.danh.dcore.Calculator.Calculator;
 import net.danh.dcore.Resource.Files;
 import net.danh.dcore.Utils.Chat;
 import net.danh.ditems.DItems;
 import net.danh.ditems.Manager.NBTItem;
-import net.danh.ditems.PlayerData.PlayerData;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -16,7 +13,6 @@ import java.util.Objects;
 
 import static net.danh.ditems.Listeners.DamageEvent.getRandomOffset;
 import static net.danh.ditems.Listeners.DamageEvent.indicators;
-import static net.danh.ditems.Resource.Resource.getStats;
 
 public class Attack {
 
@@ -25,16 +21,9 @@ public class Attack {
             Player k = (Player) e.getDamager();
             Entity t = e.getEntity();
             ItemStack item = k.getInventory().getItemInMainHand();
-            int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-            int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
-            int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
             if (t instanceof Player) {
-                int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getCritFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -50,12 +39,9 @@ public class Attack {
                     }
                 }
             }
-            if (t instanceof Mob) {
+            if (t instanceof Monster || t instanceof Animals) {
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getCritFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -78,16 +64,9 @@ public class Attack {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
                 ItemStack item = k.getInventory().getItemInMainHand();
-                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-                int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
-                int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
                 if (t instanceof Player) {
-                    int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getCritFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -103,12 +82,9 @@ public class Attack {
                         }
                     }
                 }
-                if (t instanceof Mob) {
+                if (t instanceof Monster || t instanceof Animals) {
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getCritFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -133,14 +109,9 @@ public class Attack {
             Player k = (Player) e.getDamager();
             Entity t = e.getEntity();
             ItemStack item = k.getInventory().getItemInMainHand();
-            int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
             if (t instanceof Player) {
-                int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getNormalFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -156,12 +127,9 @@ public class Attack {
                     }
                 }
             }
-            if (t instanceof Mob) {
+            if (t instanceof Monster || t instanceof Animals) {
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getNormalFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -184,14 +152,9 @@ public class Attack {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
                 ItemStack item = k.getInventory().getItemInMainHand();
-                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
                 if (t instanceof Player) {
-                    int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getNormalFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -207,12 +170,9 @@ public class Attack {
                         }
                     }
                 }
-                if (t instanceof Mob) {
+                if (t instanceof Monster || t instanceof Animals) {
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getNormalFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -237,18 +197,9 @@ public class Attack {
             Player k = (Player) e.getDamager();
             Entity t = e.getEntity();
             ItemStack item = k.getInventory().getItemInMainHand();
-            int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-            int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
-            int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
-            int pvp_damage;
             if (t instanceof Player) {
-                int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
-                pvp_damage = (int) new NBTItem(item).getDoubleStats("PVP_DAMAGE");
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_CRIT_ATTACK")).replaceAll("#crit_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getPvPCritFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -271,18 +222,9 @@ public class Attack {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
                 ItemStack item = k.getInventory().getItemInMainHand();
-                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-                int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
-                int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
-                int pvp_damage;
                 if (t instanceof Player) {
-                    int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
-                    pvp_damage = (int) new NBTItem(item).getDoubleStats("PVP_DAMAGE");
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_CRIT_ATTACK")).replaceAll("#crit_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getPvPCritFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -307,16 +249,9 @@ public class Attack {
             Player k = (Player) e.getDamager();
             Entity t = e.getEntity();
             ItemStack item = k.getInventory().getItemInMainHand();
-            int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-            int pvp_damage;
             if (t instanceof Player) {
-                int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
-                pvp_damage = (int) new NBTItem(item).getDoubleStats("PVP_DAMAGE");
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_NORMAL_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getPvPNormalFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -339,16 +274,9 @@ public class Attack {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
                 ItemStack item = k.getInventory().getItemInMainHand();
-                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-                int pvp_damage;
                 if (t instanceof Player) {
-                    int armor = PlayerData.getArmorStats((Player) t, "ARMOR");
-                    pvp_damage = (int) new NBTItem(item).getDoubleStats("PVP_DAMAGE");
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_NORMAL_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(armor)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#armor#", String.valueOf(armor)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getPvPNormalFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -373,17 +301,9 @@ public class Attack {
             Player k = (Player) e.getDamager();
             Entity t = e.getEntity();
             ItemStack item = k.getInventory().getItemInMainHand();
-            int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-            int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
-            int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
-            int pvp_damage;
-            if (t instanceof Mob) {
-                pvp_damage = (int) new NBTItem(item).getDoubleStats("PVE_DAMAGE");
+            if (t instanceof Monster || t instanceof Animals) {
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_CRIT_ATTACK")).replaceAll("#crit_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getPvECritFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -406,17 +326,9 @@ public class Attack {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
                 ItemStack item = k.getInventory().getItemInMainHand();
-                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-                int crit_damage = (int) new NBTItem(item).getDoubleStats("CRIT_DAMAGE");
-                int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
-                int pvp_damage;
-                if (t instanceof Mob) {
-                    pvp_damage = (int) new NBTItem(item).getDoubleStats("PVE_DAMAGE");
+                if (t instanceof Monster || t instanceof Animals) {
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_CRIT_ATTACK")).replaceAll("#crit_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.CRIT_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#crit_damage#", String.valueOf(crit_damage)).replaceAll("#crit_chance#", String.valueOf(crit_chance)).replaceAll("#armor#", String.valueOf(1)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getPvECritFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -441,15 +353,9 @@ public class Attack {
             Player k = (Player) e.getDamager();
             Entity t = e.getEntity();
             ItemStack item = k.getInventory().getItemInMainHand();
-            int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-            int pvp_damage;
-            if (t instanceof Mob) {
-                pvp_damage = (int) new NBTItem(item).getDoubleStats("PVE_DAMAGE");
+            if (t instanceof Monster || t instanceof Animals) {
                 if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                    String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_NORMAL_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#armor#", String.valueOf(1)), 0);
-                    String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                    double d_damage = Double.parseDouble(papi);
-                    int f_damage = (int) d_damage;
+                    int f_damage = (int) Formula.getPvENormalFormula(k);
                     e.setDamage(Math.max(f_damage, 0));
                     if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
@@ -472,15 +378,9 @@ public class Attack {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
                 ItemStack item = k.getInventory().getItemInMainHand();
-                int damage = (int) new NBTItem(item).getDoubleStats("DAMAGE");
-                int pvp_damage;
-                if (t instanceof Mob) {
-                    pvp_damage = (int) new NBTItem(item).getDoubleStats("PVE_DAMAGE");
+                if (t instanceof Monster || t instanceof Animals) {
                     if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        String calculator = Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.PVP_NORMAL_ATTACK")).replaceAll("#normal_attack#", Calculator.calculator(Objects.requireNonNull(getStats().getString("FORMULA.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#armor#", String.valueOf(1)), 0)).replaceAll("#damage#", String.valueOf(damage)).replaceAll("#pvp_damage#", String.valueOf(pvp_damage)).replaceAll("#armor#", String.valueOf(1)), 0);
-                        String papi = PlaceholderAPI.setPlaceholders(k, calculator);
-                        double d_damage = Double.parseDouble(papi);
-                        int f_damage = (int) d_damage;
+                        int f_damage = (int) Formula.getPvENormalFormula(k);
                         e.setDamage(Math.max(f_damage, 0));
                         if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());

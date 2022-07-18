@@ -9,10 +9,7 @@ import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.PlayerData.PlayerData;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -65,7 +62,7 @@ public class DamageEvent implements Listener {
                         }
                     }
                 }
-                if (e.getEntity() instanceof Mob) {
+                if (e.getEntity() instanceof Monster || e.getEntity() instanceof Animals) {
                     if (new NBTItem(item).hasDoubleStats("PVE_DAMAGE")) {
                         if (chance >= crit_chance) {
                             Attack.PvENormalAttack(e);
