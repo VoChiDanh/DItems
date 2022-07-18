@@ -36,7 +36,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -57,7 +57,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -89,7 +89,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -110,7 +110,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -142,7 +142,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -163,7 +163,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -193,7 +193,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -214,7 +214,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -250,7 +250,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -284,7 +284,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -318,7 +318,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -350,7 +350,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -385,7 +385,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -418,7 +418,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);
@@ -451,7 +451,7 @@ public class Attack {
                     double d_damage = Double.parseDouble(papi);
                     int f_damage = (int) d_damage;
                     e.setDamage(Math.max(f_damage, 0));
-                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                    if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                         Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                         t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                             armorStand.setMarker(true);
@@ -482,7 +482,7 @@ public class Attack {
                         double d_damage = Double.parseDouble(papi);
                         int f_damage = (int) d_damage;
                         e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && !new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
+                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
                             Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                             t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                                 armorStand.setMarker(true);

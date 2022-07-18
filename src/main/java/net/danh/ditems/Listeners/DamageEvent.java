@@ -83,17 +83,19 @@ public class DamageEvent implements Listener {
                 }
             }
             if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
-                Location loc = target.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                int damage = (int) e.getDamage();
-                target.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                    armorStand.setMarker(true);
-                    armorStand.setVisible(false);
-                    armorStand.setGravity(false);
-                    armorStand.setSmall(true);
-                    armorStand.setCustomNameVisible(true);
-                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage))));
-                    indicators.put(armorStand, 30);
-                });
+                if (new NBTItem(item).hasData()) {
+                    Location loc = target.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                    int damage = (int) e.getDamage();
+                    target.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                        armorStand.setMarker(true);
+                        armorStand.setVisible(false);
+                        armorStand.setGravity(false);
+                        armorStand.setSmall(true);
+                        armorStand.setCustomNameVisible(true);
+                        armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(damage))));
+                        indicators.put(armorStand, 30);
+                    });
+                }
             }
         }
     }
