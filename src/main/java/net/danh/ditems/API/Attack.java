@@ -72,8 +72,8 @@ public class Attack {
                 }
             }
         }
-        if (e.getDamager() instanceof Arrow) {
-            Arrow a = (Arrow) e.getDamager();
+        if (e.getDamager() instanceof Projectile) {
+            Projectile a = (Projectile) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
@@ -178,8 +178,8 @@ public class Attack {
                 }
             }
         }
-        if (e.getDamager() instanceof Arrow) {
-            Arrow a = (Arrow) e.getDamager();
+        if (e.getDamager() instanceof Projectile) {
+            Projectile a = (Projectile) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
@@ -265,8 +265,8 @@ public class Attack {
                 }
             }
         }
-        if (e.getDamager() instanceof Arrow) {
-            Arrow a = (Arrow) e.getDamager();
+        if (e.getDamager() instanceof Projectile) {
+            Projectile a = (Projectile) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
@@ -333,8 +333,8 @@ public class Attack {
                 }
             }
         }
-        if (e.getDamager() instanceof Arrow) {
-            Arrow a = (Arrow) e.getDamager();
+        if (e.getDamager() instanceof Projectile) {
+            Projectile a = (Projectile) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
@@ -400,8 +400,8 @@ public class Attack {
                 }
             }
         }
-        if (e.getDamager() instanceof Arrow) {
-            Arrow a = (Arrow) e.getDamager();
+        if (e.getDamager() instanceof Projectile) {
+            Projectile a = (Projectile) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
@@ -466,8 +466,8 @@ public class Attack {
                 }
             }
         }
-        if (e.getDamager() instanceof Arrow) {
-            Arrow a = (Arrow) e.getDamager();
+        if (e.getDamager() instanceof Projectile) {
+            Projectile a = (Projectile) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player k = (Player) a.getShooter();
                 Entity t = e.getEntity();
