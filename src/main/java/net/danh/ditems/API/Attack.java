@@ -60,43 +60,45 @@ public class Attack {
         }
         if (e.getDamager() instanceof Projectile) {
             Projectile a = (Projectile) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player k = (Player) a.getShooter();
-                Entity t = e.getEntity();
-                ItemStack item = k.getInventory().getItemInMainHand();
-                if (t instanceof Player) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getCritFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+            if (a instanceof Arrow) {
+                if (a.getShooter() instanceof Player) {
+                    Player k = (Player) a.getShooter();
+                    Entity t = e.getEntity();
+                    ItemStack item = k.getInventory().getItemInMainHand();
+                    if (t instanceof Player) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getCritFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
-                }
-                if (t instanceof Monster || t instanceof Animals) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getCritFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+                    if (t instanceof Monster || t instanceof Animals) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getCritFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
                 }
@@ -148,43 +150,45 @@ public class Attack {
         }
         if (e.getDamager() instanceof Projectile) {
             Projectile a = (Projectile) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player k = (Player) a.getShooter();
-                Entity t = e.getEntity();
-                ItemStack item = k.getInventory().getItemInMainHand();
-                if (t instanceof Player) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getNormalFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+            if (a instanceof Arrow) {
+                if (a.getShooter() instanceof Player) {
+                    Player k = (Player) a.getShooter();
+                    Entity t = e.getEntity();
+                    ItemStack item = k.getInventory().getItemInMainHand();
+                    if (t instanceof Player) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getNormalFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
-                }
-                if (t instanceof Monster || t instanceof Animals) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getNormalFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+                    if (t instanceof Monster || t instanceof Animals) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getNormalFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
                 }
@@ -218,25 +222,27 @@ public class Attack {
         }
         if (e.getDamager() instanceof Projectile) {
             Projectile a = (Projectile) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player k = (Player) a.getShooter();
-                Entity t = e.getEntity();
-                ItemStack item = k.getInventory().getItemInMainHand();
-                if (t instanceof Player) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getPvPCritFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+            if (a instanceof Arrow) {
+                if (a.getShooter() instanceof Player) {
+                    Player k = (Player) a.getShooter();
+                    Entity t = e.getEntity();
+                    ItemStack item = k.getInventory().getItemInMainHand();
+                    if (t instanceof Player) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getPvPCritFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
                 }
@@ -270,25 +276,27 @@ public class Attack {
         }
         if (e.getDamager() instanceof Projectile) {
             Projectile a = (Projectile) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player k = (Player) a.getShooter();
-                Entity t = e.getEntity();
-                ItemStack item = k.getInventory().getItemInMainHand();
-                if (t instanceof Player) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getPvPNormalFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+            if (a instanceof Arrow) {
+                if (a.getShooter() instanceof Player) {
+                    Player k = (Player) a.getShooter();
+                    Entity t = e.getEntity();
+                    ItemStack item = k.getInventory().getItemInMainHand();
+                    if (t instanceof Player) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getPvPNormalFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
                 }
@@ -322,25 +330,27 @@ public class Attack {
         }
         if (e.getDamager() instanceof Projectile) {
             Projectile a = (Projectile) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player k = (Player) a.getShooter();
-                Entity t = e.getEntity();
-                ItemStack item = k.getInventory().getItemInMainHand();
-                if (t instanceof Monster || t instanceof Animals) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getPvECritFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+            if (a instanceof Arrow) {
+                if (a.getShooter() instanceof Player) {
+                    Player k = (Player) a.getShooter();
+                    Entity t = e.getEntity();
+                    ItemStack item = k.getInventory().getItemInMainHand();
+                    if (t instanceof Monster || t instanceof Animals) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getPvECritFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.CRIT_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
                 }
@@ -374,25 +384,27 @@ public class Attack {
         }
         if (e.getDamager() instanceof Projectile) {
             Projectile a = (Projectile) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player k = (Player) a.getShooter();
-                Entity t = e.getEntity();
-                ItemStack item = k.getInventory().getItemInMainHand();
-                if (t instanceof Monster || t instanceof Animals) {
-                    if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
-                        int f_damage = (int) Formula.getPvENormalFormula(k);
-                        e.setDamage(Math.max(f_damage, 0));
-                        if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
-                            Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
-                            t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-                                armorStand.setMarker(true);
-                                armorStand.setVisible(false);
-                                armorStand.setGravity(false);
-                                armorStand.setSmall(true);
-                                armorStand.setCustomNameVisible(true);
-                                armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
-                                indicators.put(armorStand, 30);
-                            });
+            if (a instanceof Arrow) {
+                if (a.getShooter() instanceof Player) {
+                    Player k = (Player) a.getShooter();
+                    Entity t = e.getEntity();
+                    ItemStack item = k.getInventory().getItemInMainHand();
+                    if (t instanceof Monster || t instanceof Animals) {
+                        if (new NBTItem(item).hasDoubleStats("DAMAGE")) {
+                            int f_damage = (int) Formula.getPvENormalFormula(k);
+                            e.setDamage(Math.max(f_damage, 0));
+                            if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE")) {
+                                Location loc = t.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
+                                t.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                                    armorStand.setMarker(true);
+                                    armorStand.setVisible(false);
+                                    armorStand.setGravity(false);
+                                    armorStand.setSmall(true);
+                                    armorStand.setCustomNameVisible(true);
+                                    armorStand.setCustomName(Chat.colorize(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("INDICATORS.NORMAL_ATTACK")).replaceAll("#damage#", String.valueOf(f_damage))));
+                                    indicators.put(armorStand, 30);
+                                });
+                            }
                         }
                     }
                 }
