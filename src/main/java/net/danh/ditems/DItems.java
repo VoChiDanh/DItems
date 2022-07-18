@@ -15,7 +15,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 
 import static net.danh.ditems.Listeners.DamageEvent.indicators;
 

@@ -1,6 +1,7 @@
 net.danh.ditems
 net.danh.ditems.API
 net.danh.ditems.Commands
+net.danh.ditems.Compatible
 net.danh.ditems.Listeners
 net.danh.ditems.Manager
 net.danh.ditems.PlayerData

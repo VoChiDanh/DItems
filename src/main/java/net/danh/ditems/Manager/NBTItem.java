@@ -55,7 +55,7 @@ public class NBTItem {
     }
 
     public boolean hasDoubleStats(String stats) {
-        return getDoubleStats(stats) >= 1d;
+        return getDoubleStats(stats) > 0d;
     }
 
     public List<String> getStringListStats(String stats) {

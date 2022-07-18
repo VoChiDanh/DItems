@@ -9,7 +9,10 @@ import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.PlayerData.PlayerData;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -46,42 +49,43 @@ public class DamageEvent implements Listener {
             }
             int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
             int chance = Number.getRandomInt(1, 100);
-            if (target instanceof Player) {
-                Player t = ((Player) target).getPlayer();
-                if (t != null) {
-                    if (new NBTItem(item).hasData()) {
-                        if (!new NBTItem(item).hasDoubleStats("PVP_DAMAGE")) {
-                            if (chance > crit_chance) {
-                                Attack.NormalAttack(e, k, t);
-                            } else {
-                                Attack.CritAttack(e, k, t);
-                            }
+            if (new NBTItem(item).hasData()) {
+                if (e.getEntity() instanceof Player) {
+                    if (new NBTItem(item).hasDoubleStats("PVP_DAMAGE")) {
+                        if (chance >= crit_chance) {
+                            Attack.PvPNormalAttack(e);
                         } else {
-                            if (chance > crit_chance) {
-                                Attack.PvPNormalAttack(e, k, t);
-                            } else {
-                                Attack.PvPCritAttack(e, k, t);
-                            }
+                            Attack.PvPCritAttack(e);
+                        }
+                    } else {
+                        if (chance >= crit_chance) {
+                            Attack.NormalAttack(e);
+                        } else {
+                            Attack.CritAttack(e);
                         }
                     }
                 }
-            } else if (target instanceof Monster || target instanceof Animals) {
-                if (chance > crit_chance) {
-                    Attack.NormalAttack(e, k, target);
-                } else {
-                    Attack.CritAttack(e, k, target);
-                }
-            } else {
-                if (chance > crit_chance) {
-                    Attack.PvPNormalAttack(e, k, target);
-                } else {
-                    Attack.PvPCritAttack(e, k, target);
+                if (e.getEntity() instanceof Mob) {
+                    if (new NBTItem(item).hasDoubleStats("PVE_DAMAGE")) {
+                        if (chance >= crit_chance) {
+                            Attack.PvENormalAttack(e);
+                        } else {
+                            Attack.PvECritAttack(e);
+                        }
+                    } else {
+                        if (chance >= crit_chance) {
+                            Attack.NormalAttack(e);
+                        } else {
+                            Attack.CritAttack(e);
+                        }
+                    }
+
                 }
             }
             if (new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.ENABLE") && new Files(DItems.getInstance(), "config").getConfig().getBoolean("INDICATORS.SUPPORT_OTHER_PLUGIN")) {
                 Location loc = target.getLocation().clone().add(getRandomOffset(), 1, getRandomOffset());
                 int damage = (int) e.getDamage();
-                k.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+                target.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
                     armorStand.setMarker(true);
                     armorStand.setVisible(false);
                     armorStand.setGravity(false);
