@@ -1,10 +1,10 @@
 package net.danh.ditems.API;
 
 import net.danh.dcore.NMS.NMSAssistant;
-import net.danh.dcore.Resource.FileFolder;
 import net.danh.dcore.Resource.Files;
 import net.danh.ditems.DItems;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.Resource.FFolder.ItemSaved;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class Items {
      * @param amount Amount
      */
     public static void loadItems(Player p, String key, Integer amount) {
-        FileFolder get = new FileFolder(DItems.getInstance(), "items", "ItemSaved");
+        ItemSaved get = new ItemSaved();
         if (get.getConfig().getConfigurationSection(key) != null) {
             Material material = Material.getMaterial(Objects.requireNonNull(get.getConfig().getString(key + ".Material")));
             ItemStack item;
@@ -79,7 +79,7 @@ public class Items {
      * @param item ItemStack
      */
     public static void saveItems(String key, ItemStack item) {
-        FileFolder get = new FileFolder(DItems.getInstance(), "items", "ItemSaved");
+        ItemSaved get = new ItemSaved();
         get.getConfig().set(key + ".Material", item.getType().toString());
         Map<Enchantment, Integer> enchants = item.getEnchantments();
         NMSAssistant nms = new NMSAssistant();

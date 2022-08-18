@@ -3,11 +3,11 @@ package net.danh.ditems.Commands;
 import net.danh.dcore.Commands.CMDBase;
 import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Random.Number;
-import net.danh.dcore.Resource.FileFolder;
 import net.danh.dcore.Resource.Files;
 import net.danh.ditems.API.Items;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.Resource.FFolder.ItemSaved;
 import net.danh.ditems.Resource.Resource;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -258,7 +258,7 @@ public class DItems extends CMDBase {
                     StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(new Files(net.danh.ditems.DItems.getInstance(), "stats").getConfig().getConfigurationSection("STATS")).getKeys(false), completions);
                 }
                 if (args[0].equalsIgnoreCase("load")) {
-                    StringUtil.copyPartialMatches(args[1], new FileFolder(net.danh.ditems.DItems.getInstance(), "items", "ItemSaved").getConfig().getKeys(false), completions);
+                    StringUtil.copyPartialMatches(args[1], new ItemSaved().getConfig().getKeys(false), completions);
                 }
                 if (args[0].equalsIgnoreCase("addenchant") || args[0].equalsIgnoreCase("removeenchant")) {
                     for (Enchantment enchantment : Enchantment.values()) {
