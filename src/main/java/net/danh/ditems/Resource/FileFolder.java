@@ -1,9 +1,10 @@
 package net.danh.ditems.Resource;
 
-import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public abstract class FileFolder {
     private final String name;

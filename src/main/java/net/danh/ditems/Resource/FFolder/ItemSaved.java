@@ -23,8 +23,9 @@ public class ItemSaved {
     public void load() {
         File file = new File(this.core.getDataFolder(), "ItemSaved" + File.separator + this.name + ".yml");
         if (!file.exists()) {
+            file.getParentFile().mkdirs();
             try {
-                this.core.saveResource(this.file.getPath(), false);
+                file.createNewFile();
             } catch (Exception var3) {
                 var3.printStackTrace();
             }

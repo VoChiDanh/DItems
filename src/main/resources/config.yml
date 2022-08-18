@@ -2,11 +2,6 @@ SETTINGS:
   LEVEL: "VANILLA"
   #VANILLA - Vanilla level
   ABILITY: "&9Ability: &a#action# - #ability# - #delay#s"
-INDICATORS:
-  ENABLE: true
-  SUPPORT_OTHER_PLUGIN: false
-  NORMAL_ATTACK: "&c-#damage#"
-  CRIT_ATTACK: "&4-#damage#"
 ACTION:
   - RIGHT_CLICK
   - LEFT_CLICK

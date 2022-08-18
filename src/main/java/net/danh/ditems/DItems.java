@@ -3,28 +3,20 @@ package net.danh.ditems;
 import net.danh.dcore.DCore;
 import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Resource.Files;
+import net.danh.dcore.Utils.Chat;
 import net.danh.dcore.Utils.File;
+import net.danh.dcore.Utils.Status;
 import net.danh.ditems.Compatible.PlaceholderAPI;
 import net.danh.ditems.Listeners.*;
 import net.danh.ditems.Resource.FFolder.Ability;
 import net.danh.ditems.Resource.FFolder.ItemSaved;
 import net.danh.ditems.Runnable.Health;
-import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static net.danh.ditems.Listeners.DamageEvent.indicators;
 
 
 public final class DItems extends JavaPlugin {
 
     private static DItems INSTANCE;
-    final Set<Entity> stands = indicators.keySet();
-    final List<Entity> removal = new ArrayList<>();
 
     public static DItems getInstance() {
         return INSTANCE;
@@ -37,7 +29,7 @@ public final class DItems extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         } else {
-            DCore.dCoreLog("&aEnable mode compatible with &bPlaceholderAPI");
+            getLogger().info(Chat.colorize(Status.TRUE.getSymbol() + "&e Loaded system compatible with PlaceholderAPI"));
             new PlaceholderAPI().register();
         }
         DCore.RegisterDCore(this);
@@ -66,31 +58,10 @@ public final class DItems extends JavaPlugin {
         net.danh.ditems.Runnable.HealthRegen healthRegen_runnable = new net.danh.ditems.Runnable.HealthRegen();
         health_runnable.runTaskTimer(this, 0L, 0L);
         healthRegen_runnable.runTaskTimer(this, 0L, 100L);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Entity stand : stands) {
-                    int ticksLeft = indicators.get(stand);
-                    if (ticksLeft == 0) {
-                        stand.remove();
-                        removal.add(stand);
-                        continue;
-                    }
-                    ticksLeft--;
-                    indicators.put(stand, ticksLeft);
-                }
-                removal.forEach(stands::remove);
-            }
-        }.runTaskTimer(this, 0L, 1L);
     }
 
     @Override
     public void onDisable() {
-        for (Entity stand : stands) {
-            stand.remove();
-            removal.add(stand);
-        }
-        removal.forEach(stands::remove);
         new Files(this, "stats").save();
         new Files(this, "message").save();
         new ItemSaved().save();

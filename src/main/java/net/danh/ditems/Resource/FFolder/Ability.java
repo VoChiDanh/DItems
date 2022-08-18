@@ -24,7 +24,7 @@ public class Ability {
         File file = new File(this.core.getDataFolder(), "Ability" + File.separator + this.name + ".yml");
         if (!file.exists()) {
             try {
-                this.core.saveResource(this.file.getPath(), false);
+                this.core.saveResource("Ability" + File.separator + this.name + ".yml", false);
             } catch (Exception var3) {
                 var3.printStackTrace();
             }
