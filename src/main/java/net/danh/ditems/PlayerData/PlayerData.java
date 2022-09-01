@@ -8,6 +8,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import static net.danh.ditems.Resource.Resource.getConfig;
@@ -114,7 +115,7 @@ public class PlayerData {
                 }
             }
         }
-        return Integer.parseInt(Calculator.calculator(String.valueOf((int) (helmet_stats + chestplate_stats + leggings_stats + boots_stats)), 0));
+        return BigDecimal.valueOf(Long.parseLong(Calculator.calculator(String.valueOf((int) (helmet_stats + chestplate_stats + leggings_stats + boots_stats)), 0))).intValue();
     }
 
     /**
@@ -208,7 +209,7 @@ public class PlayerData {
                 }
             }
         }
-        return Integer.parseInt(Calculator.calculator(String.valueOf((int) (helmet_stats + chestplate_stats + leggings_stats + boots_stats + item_stats)), 0));
+        return BigDecimal.valueOf(Long.parseLong(Calculator.calculator(String.valueOf((int) (helmet_stats + chestplate_stats + leggings_stats + boots_stats + item_stats)), 0))).intValue();
     }
 
 }

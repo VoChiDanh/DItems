@@ -6,6 +6,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -48,7 +49,7 @@ public class ArmorEquipEvent extends PlayerEvent {
      * @return A list of handlers handling this event.
      */
     @Override
-    public final HandlerList getHandlers() {
+    public final @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

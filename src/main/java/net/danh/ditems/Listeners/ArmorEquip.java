@@ -101,7 +101,7 @@ public class ArmorEquip implements Listener {
         // Can't replace armor using this method making getCursor() useless.
         ArmorEquipEvent.ArmorType type = ArmorEquipEvent.ArmorType.matchType(event.getOldCursor());
         if (event.getRawSlots().isEmpty())
-            return;// Idk if this will ever happen
+            return;// I don't know if this will ever happen
         if (type != null && type.getSlot() == event.getRawSlots().stream().findFirst().orElse(0))
             Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent((Player) event.getWhoClicked(), type, null, event.getOldCursor()));
     }

@@ -35,6 +35,10 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             String stats = args.substring(6);
             return String.valueOf(PlayerData.getPlayerStats(p, stats.toUpperCase()));
         }
+        if (args.startsWith("armor_stats_")) {
+            String stats = args.substring(12);
+            return String.valueOf(PlayerData.getArmorStats(p, stats.toUpperCase()));
+        }
         return null;
     }
 }
