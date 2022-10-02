@@ -6,7 +6,7 @@
 
     <groupId>net.danh</groupId>
     <artifactId>DItems</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT-${buildNumber}</version>
     <packaging>jar</packaging>
 
     <name>DItems</name>
@@ -15,6 +15,13 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <scm>
+        <connection>scm:git:https://github.com/D-x-Z/DItems.git</connection>
+        <developerConnection>scm:git:https://github.com/D-x-Z/DItems.git</developerConnection>
+        <url>scm:git:git@github.com:D-x-Z/DItems.git</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <build>
         <finalName>${project.name}</finalName>
@@ -61,6 +68,40 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <format>{0,number}</format>
+                    <items>
+                        <item>buildNumber0</item>
+                    </items>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Build>${buildNumber}</Implementation-Build>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
