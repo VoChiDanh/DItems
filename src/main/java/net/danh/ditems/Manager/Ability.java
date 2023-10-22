@@ -2,7 +2,8 @@ package net.danh.ditems.Manager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.danh.ditems.DItems;
-import net.danh.ditems.Resource.Resource;
+import net.danh.ditems.Utils.Chat;
+import net.danh.ditems.Utils.File;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,7 +12,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class Ability {
 
@@ -19,15 +19,15 @@ public class Ability {
 
     public static void executeCMD(Player p, String cmd, Integer delay) {
         if (cooldown.contains(p.getName() + "_" + cmd)) {
-            sendPlayerMessage(p, Objects.requireNonNull(Resource.getMessage().getString("USER.DELAY")).replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(cmd + ".DISPLAY"))));
+            p.sendMessage(Chat.colorize(Objects.requireNonNull(File.getMessage().getString("USER.DELAY")).replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(cmd + ".DISPLAY")))));
             return;
         }
-        for (String list_command : Resource.getCMD().getStringList(cmd + ".COMMAND")) {
+        for (String list_command : File.getAbility_CMD().getStringList(cmd + ".COMMAND")) {
             String papi = PlaceholderAPI.setPlaceholders(p, list_command);
-            Bukkit.getServer().dispatchCommand(DItems.getInstance().getServer().getConsoleSender(), papi);
+            Bukkit.getServer().dispatchCommand(DItems.getDItems().getServer().getConsoleSender(), papi);
             cooldown.add(p.getName() + "_" + cmd);
         }
-        new RemoveCooldown(p.getName() + "_" + cmd).runTaskLater(DItems.getInstance(), delay * 20L);
+        new RemoveCooldown(p.getName() + "_" + cmd).runTaskLater(DItems.getDItems(), delay * 20L);
     }
 
     public static class RemoveCooldown extends BukkitRunnable {

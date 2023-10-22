@@ -1,9 +1,8 @@
 package net.danh.ditems.API;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.danh.dcore.Calculator.Calculator;
-import net.danh.dcore.Resource.Files;
-import net.danh.ditems.DItems;
+import net.danh.ditems.Calculator.Calculator;
+import net.danh.ditems.Utils.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -12,7 +11,7 @@ import java.math.BigDecimal;
 public class Formula {
 
     public static double getNormalFormula(Player p) {
-        FileConfiguration file = new Files(DItems.getInstance(), "stats").getConfig();
+        FileConfiguration file = File.getStats();
         String formula = file.getString("FORMULA.NORMAL_ATTACK");
         if (formula == null) return 0;
         String papi = PlaceholderAPI.setPlaceholders(p, formula);
@@ -23,7 +22,7 @@ public class Formula {
     }
 
     public static double getCritFormula(Player p) {
-        FileConfiguration file = new Files(DItems.getInstance(), "stats").getConfig();
+        FileConfiguration file = File.getStats();
         String formula = file.getString("FORMULA.CRIT_ATTACK");
         if (formula == null) return 0;
         String papi = PlaceholderAPI.setPlaceholders(p, formula);
@@ -35,7 +34,7 @@ public class Formula {
     }
 
     public static double getPvPNormalFormula(Player p) {
-        FileConfiguration file = new Files(DItems.getInstance(), "stats").getConfig();
+        FileConfiguration file = File.getStats();
         String formula = file.getString("FORMULA.PVP_NORMAL_ATTACK");
         if (formula == null) return 0;
         String papi = PlaceholderAPI.setPlaceholders(p, formula);
@@ -47,7 +46,7 @@ public class Formula {
     }
 
     public static double getPvPCritFormula(Player p) {
-        FileConfiguration file = new Files(DItems.getInstance(), "stats").getConfig();
+        FileConfiguration file = File.getStats();
         String formula = file.getString("FORMULA.PVP_CRIT_ATTACK");
         if (formula == null) return 0;
         String papi = PlaceholderAPI.setPlaceholders(p, formula);
@@ -59,7 +58,7 @@ public class Formula {
     }
 
     public static double getPvENormalFormula(Player p) {
-        FileConfiguration file = new Files(DItems.getInstance(), "stats").getConfig();
+        FileConfiguration file = File.getStats();
         String formula = file.getString("FORMULA.PVE_NORMAL_ATTACK");
         if (formula == null) return 0;
         String papi = PlaceholderAPI.setPlaceholders(p, formula);
@@ -71,7 +70,7 @@ public class Formula {
     }
 
     public static double getPvECritFormula(Player p) {
-        FileConfiguration file = new Files(DItems.getInstance(), "stats").getConfig();
+        FileConfiguration file = File.getStats();
         String formula = file.getString("FORMULA.PVE_CRIT_ATTACK");
         if (formula == null) return 0;
         String papi = PlaceholderAPI.setPlaceholders(p, formula);

@@ -17,7 +17,7 @@ jobs:
         run: mvn -B package
       - uses: "actions/upload-artifact@v3"
         with:
-          name: "[#${{github.run_number}}]-DItems"
+          name: "[#${{github.run_number}}]-DItemsCMD"
           path: |
             ./target/DItems.jar
       - uses: jungwinter/split@v2
@@ -40,5 +40,5 @@ jobs:
           embed-footer-icon-url: "https://i.imgur.com/D5KVghH.png"
           embed-description: |
             ${{ github.event.head_commit.message }}
-            
-            [`Click to download`](https://nightly.link/${{github.repository}}/actions/runs/${{ github.run_id }}/%5B%23${{github.run_number}}%5D-DItems.zip)
+
+          filename: "./target/DItemsCMD.jar"

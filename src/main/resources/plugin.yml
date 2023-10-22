@@ -1,6 +1,6 @@
-name: DItems
+name: DItemsCMD
 version: '${project.version}'
-main: net.danh.ditems.DItems
+main: net.danh.ditems.DItemsCMD
 api-version: 1.13
 authors: [ VoChiDanh ]
 depend:

@@ -1,9 +1,9 @@
 package net.danh.ditems.Listeners;
 
-import net.danh.dcore.Random.Number;
 import net.danh.ditems.API.Attack;
 import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.PlayerData.PlayerData;
+import net.danh.ditems.Utils.Number;
 import org.bukkit.Material;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
@@ -32,7 +32,7 @@ public class DamageEvent implements Listener {
                 }
             }
             int crit_chance = (int) new NBTItem(item).getDoubleStats("CRIT_CHANCE");
-            int chance = Number.getRandomInt(1, 100);
+            int chance = Number.getRandomInteger(1, 100);
             if (new NBTItem(item).hasData()) {
                 if (e.getEntity() instanceof Player) {
                     if (new NBTItem(item).hasDoubleStats("PVP_DAMAGE")) {

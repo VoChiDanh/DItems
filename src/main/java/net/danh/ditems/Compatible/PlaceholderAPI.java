@@ -15,12 +15,12 @@ public class PlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getAuthor() {
-        return DItems.getInstance().getDescription().getAuthors().toString();
+        return DItems.getDItems().getDescription().getAuthors().toString();
     }
 
     @Override
     public @NotNull String getVersion() {
-        return DItems.getInstance().getDescription().getVersion();
+        return DItems.getDItems().getDescription().getVersion();
     }
 
     @Override

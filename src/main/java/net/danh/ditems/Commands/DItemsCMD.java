@@ -1,14 +1,14 @@
 package net.danh.ditems.Commands;
 
-import net.danh.dcore.Commands.CMDBase;
-import net.danh.dcore.NMS.NMSAssistant;
-import net.danh.dcore.Random.Number;
-import net.danh.dcore.Resource.Files;
+
 import net.danh.ditems.API.Items;
 import net.danh.ditems.Manager.Check;
 import net.danh.ditems.Manager.NBTItem;
-import net.danh.ditems.Resource.FFolder.ItemSaved;
-import net.danh.ditems.Resource.Resource;
+import net.danh.ditems.NMS.NMSAssistant;
+import net.danh.ditems.Utils.CMDBase;
+import net.danh.ditems.Utils.Chat;
+import net.danh.ditems.Utils.File;
+import net.danh.ditems.Utils.Number;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -18,31 +18,26 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
 
 import java.util.*;
 
-import static net.danh.dcore.Utils.Player.sendConsoleMessage;
-import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 import static net.danh.ditems.API.Items.saveItems;
-import static net.danh.ditems.Resource.Resource.getMessage;
 
-public class DItems extends CMDBase {
-    public DItems(JavaPlugin core) {
-        super(core, "ditems");
+public class DItemsCMD extends CMDBase {
+    public DItemsCMD() {
+        super("ditems");
     }
 
-    @Override
     public void playerexecute(Player p, String[] args) {
         if (p.hasPermission("ditems.admin")) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("help")) {
-                    sendPlayerMessage(p, getMessage().getStringList("ADMIN.HELP"));
+                    File.getMessage().getStringList("ADMIN.HELP").forEach(s -> p.sendMessage(Chat.colorize(s)));
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
-                    Resource.reloadFiles();
-                    sendPlayerMessage(p, "&aReloaded");
+                    File.reloadFiles();
+                    p.sendMessage(Chat.colorize("&aReload"));
                 }
             }
             if (args.length == 2) {
@@ -81,14 +76,14 @@ public class DItems extends CMDBase {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     saveItems(args[1], p.getInventory().getItemInMainHand());
-                    sendPlayerMessage(p, "&aSaved item with key " + args[1]);
+                    p.sendMessage(Chat.colorize("&aSaved item with key " + args[1]));
                 }
                 if (args[0].equalsIgnoreCase("show")) {
                     if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {
                         return;
                     }
                     de.tr7zw.changeme.nbtapi.NBTItem nbtItem = new de.tr7zw.changeme.nbtapi.NBTItem(p.getInventory().getItemInMainHand());
-                    sendPlayerMessage(p, String.valueOf(nbtItem.getDouble("DITEMS_STATS_" + args[1].toUpperCase())));
+                    p.sendMessage(Chat.colorize(String.valueOf(nbtItem.getDouble("DITEMS_STATS_" + args[1].toUpperCase()))));
                 }
                 if (args[0].equalsIgnoreCase("removeenchant")) {
                     ItemStack item = p.getInventory().getItemInMainHand();
@@ -101,19 +96,19 @@ public class DItems extends CMDBase {
                     if (nms.isVersionLessThanOrEqualTo(12)) {
                         enchant = Enchantment.getByName(enchantments.toUpperCase());
                     } else {
-                        enchant = Enchantment.getByKey(new NamespacedKey(net.danh.ditems.DItems.getInstance(), enchantments.toUpperCase()));
+                        enchant = Enchantment.getByKey(new NamespacedKey(net.danh.ditems.DItems.getDItems(), enchantments.toUpperCase()));
                     }
                     if (enchant != null) {
                         new NBTItem(item).removeEnchants(enchantments);
                     } else {
-                        sendPlayerMessage(p, "&c " + args[1] + " is null, Check: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html");
+                        p.sendMessage(Chat.colorize("&c " + args[1] + " is null, Check: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html"));
                     }
                 }
             }
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("load")) {
                     String key = args[1];
-                    int amount = Number.getInt(args[2]);
+                    int amount = Number.getInteger(args[2]);
                     Items.loadItems(p, key, amount);
                 }
                 if (args[0].equalsIgnoreCase("stats")) {
@@ -124,10 +119,10 @@ public class DItems extends CMDBase {
                     String stats_name = args[1].toUpperCase();
                     if (Check.isDouble(args[2])) {
                         double amount = Double.parseDouble(args[2]);
-                        for (String name : Objects.requireNonNull(new Files(net.danh.ditems.DItems.getInstance(), "stats").getConfig().getConfigurationSection("STATS")).getKeys(false)) {
+                        for (String name : Objects.requireNonNull(File.getStats().getConfigurationSection("STATS")).getKeys(false)) {
                             if (name.equalsIgnoreCase(stats_name)) {
                                 new NBTItem(item).setStats(stats_name, amount);
-                                sendPlayerMessage(p, Objects.requireNonNull(getMessage().getString("ADMIN.SET_STATS")).replaceAll("#item#", p.getInventory().getItemInMainHand().getType().toString()).replaceAll("#stats_amount#", args[2]).replaceAll("#stats_name#", args[1]));
+                                p.sendMessage(Chat.colorize(Objects.requireNonNull(File.getMessage().getString("ADMIN.SET_STATS")).replaceAll("#item#", p.getInventory().getItemInMainHand().getType().toString()).replaceAll("#stats_amount#", args[2]).replaceAll("#stats_name#", args[1])));
                             }
                         }
                     }
@@ -143,12 +138,12 @@ public class DItems extends CMDBase {
                     if (nms.isVersionLessThanOrEqualTo(12)) {
                         enchant = Enchantment.getByName(enchantments.toUpperCase());
                     } else {
-                        enchant = Enchantment.getByKey(new NamespacedKey(net.danh.ditems.DItems.getInstance(), enchantments.toUpperCase()));
+                        enchant = Enchantment.getByKey(new NamespacedKey(net.danh.ditems.DItems.getDItems(), enchantments.toUpperCase()));
                     }
                     if (enchant != null) {
-                        new NBTItem(item).addEnchants(enchantments, Number.getInt(args[2]));
+                        new NBTItem(item).addEnchants(enchantments, Number.getInteger(args[2]));
                     } else {
-                        sendPlayerMessage(p, "&c " + args[1] + " is null, Check: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html");
+                        p.sendMessage(Chat.colorize("&c " + args[1] + " is null, Check: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html"));
                     }
                 }
             }
@@ -158,7 +153,7 @@ public class DItems extends CMDBase {
                     if (item.getType() == Material.AIR) {
                         return;
                     }
-                    int line = Number.getInt(args[1]);
+                    int line = Number.getInteger(args[1]);
                     new NBTItem(item).removeLore(line);
                 }
             }
@@ -166,7 +161,7 @@ public class DItems extends CMDBase {
                 if (args[0].equalsIgnoreCase("ability_command")) {
                     String action = args[1];
                     String command = args[2];
-                    Integer delay = Number.getInt(args[3]);
+                    Integer delay = Number.getInteger(args[3]);
                     if (p.getInventory().getItemInMainHand().getType() != Material.AIR) {
                         new NBTItem(p.getInventory().getItemInMainHand()).addAbilityCommand(action, command, delay);
                     }
@@ -190,7 +185,7 @@ public class DItems extends CMDBase {
                     new NBTItem(item).addLore(lore);
                 }
                 if (args[0].equalsIgnoreCase("setlore")) {
-                    int line = Number.getInt(args[1]);
+                    int line = Number.getInteger(args[1]);
                     ItemStack item = p.getInventory().getItemInMainHand();
                     if (item.getType() == Material.AIR) {
                         return;
@@ -202,25 +197,34 @@ public class DItems extends CMDBase {
         }
     }
 
-    @Override
     public void consoleexecute(ConsoleCommandSender c, String[] args) {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("help")) {
-                sendConsoleMessage(c, getMessage().getStringList("ADMIN.HELP"));
+                File.getMessage().getStringList("ADMIN.HELP").forEach(s -> c.sendMessage(Chat.colorize(s)));
             }
             if (args[0].equalsIgnoreCase("reload")) {
-                Resource.reloadFiles();
-                sendConsoleMessage(c, "&aReloaded");
+                File.reloadFiles();
+                c.sendMessage(Chat.colorize("&aReload"));
             }
         }
         if (args.length == 4) {
             if (args[0].equalsIgnoreCase("load")) {
                 String key = args[1];
-                int amount = Number.getInt(args[2]);
+                int amount = Number.getInteger(args[2]);
                 Player p = Bukkit.getPlayer(args[3]);
                 if (p == null) return;
                 Items.loadItems(p, key, amount);
             }
+        }
+    }
+
+    @Override
+    public void execute(CommandSender c, String[] args) {
+        if (c instanceof ConsoleCommandSender) {
+            consoleexecute((ConsoleCommandSender) c, args);
+        }
+        if (c instanceof Player) {
+            playerexecute((Player) c, args);
         }
     }
 
@@ -252,13 +256,13 @@ public class DItems extends CMDBase {
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("ability_command") || args[0].equalsIgnoreCase("remove_ability_command")) {
-                    StringUtil.copyPartialMatches(args[1], Resource.getConfig().getStringList("ACTION"), completions);
+                    StringUtil.copyPartialMatches(args[1], File.getConfig().getStringList("ACTION"), completions);
                 }
                 if (args[0].equalsIgnoreCase("stats") || args[0].equalsIgnoreCase("show")) {
-                    StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(new Files(net.danh.ditems.DItems.getInstance(), "stats").getConfig().getConfigurationSection("STATS")).getKeys(false), completions);
+                    StringUtil.copyPartialMatches(args[1], Objects.requireNonNull(File.getStats().getConfigurationSection("STATS")).getKeys(false), completions);
                 }
                 if (args[0].equalsIgnoreCase("load")) {
-                    StringUtil.copyPartialMatches(args[1], new ItemSaved().getConfig().getKeys(false), completions);
+                    StringUtil.copyPartialMatches(args[1], File.getItemSaved_Items().getKeys(false), completions);
                 }
                 if (args[0].equalsIgnoreCase("addenchant") || args[0].equalsIgnoreCase("removeenchant")) {
                     for (Enchantment enchantment : Enchantment.values()) {
@@ -277,7 +281,7 @@ public class DItems extends CMDBase {
                 }
             } else if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("ability_command")) {
-                    StringUtil.copyPartialMatches(args[2], Objects.requireNonNull(Resource.getCMD().getConfigurationSection("")).getKeys(false), completions);
+                    StringUtil.copyPartialMatches(args[2], Objects.requireNonNull(File.getAbility_CMD().getConfigurationSection("")).getKeys(false), completions);
                 }
             }
         }

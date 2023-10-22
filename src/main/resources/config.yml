@@ -12,3 +12,4 @@ CLICK_TYPE:
   LEFT_CLICK: "Left Click"
   SHIFT_RIGHT_CLICK: "Shift Right Click"
   SHIFT_LEFT_CLICK: "Shift Left Click"
+PREFIX: "&7[&eDItems&7]"

@@ -1,11 +1,10 @@
 package net.danh.ditems.Manager;
 
-import net.danh.dcore.NMS.NMSAssistant;
-import net.danh.dcore.Resource.Files;
-import net.danh.dcore.Utils.Chat;
-import net.danh.dcore.Utils.Items;
 import net.danh.ditems.DItems;
-import net.danh.ditems.Resource.Resource;
+import net.danh.ditems.NMS.NMSAssistant;
+import net.danh.ditems.Utils.Chat;
+import net.danh.ditems.Utils.File;
+import net.danh.ditems.Utils.Items;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -125,7 +124,7 @@ public class NBTItem {
         if (nms.isVersionLessThanOrEqualTo(12)) {
             enchant = Enchantment.getByName(enchantments.toUpperCase());
         } else {
-            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getInstance(), enchantments.toUpperCase()));
+            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getDItems(), enchantments.toUpperCase()));
         }
         if (enchant != null) {
             nbtItem.getItem().addUnsafeEnchantment(enchant, level);
@@ -139,7 +138,7 @@ public class NBTItem {
         if (nms.isVersionLessThanOrEqualTo(12)) {
             enchant = Enchantment.getByName(enchantments.toUpperCase());
         } else {
-            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getInstance(), enchantments.toUpperCase()));
+            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getDItems(), enchantments.toUpperCase()));
         }
         if (enchant != null && nbtItem.getItem().containsEnchantment(enchant)) {
             nbtItem.getItem().removeEnchantment(enchant);
@@ -156,13 +155,13 @@ public class NBTItem {
         List<String> lore = im.getLore();
         for (int i = 0; i < lore.size(); i++) {
             if (action.equals(nbtItem.getString("CLICK"))) {
-                if (lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                        .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                        .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                if (lore.contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                        .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                        .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
                         .replaceAll("#delay#", String.valueOf(nbtItem.getString("CLICK")))))) {
-                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
                             .replaceAll("#delay#", String.valueOf(nbtItem.getString("CLICK")))))) {
                         lore.remove(lore.get(i));
                         im.setLore(lore);
@@ -179,9 +178,9 @@ public class NBTItem {
     public void addAbilityCommand(String action, String command, Integer delay) {
         ItemMeta im = nbtItem.getItem().getItemMeta();
         if (im.getLore() == null) {
-            im.setLore(Items.Lore(Collections.singletonList(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                    .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                    .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+            im.setLore(Items.Lore(Collections.singletonList(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                    .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                    .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(command + ".DISPLAY")))
                     .replaceAll("#delay#", String.valueOf(delay)))));
             nbtItem.getItem().setItemMeta(im);
             nbtItem.setString("CMD_" + action, command);
@@ -190,17 +189,17 @@ public class NBTItem {
         } else {
             List<String> lore = im.getLore();
             for (int i = 0; i < lore.size(); i++) {
-                if (action.equals(nbtItem.getString("CLICK")) && lore.contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                        .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                        .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                if (action.equals(nbtItem.getString("CLICK")) && lore.contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                        .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                        .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
                         .replaceAll("#delay#", String.valueOf(nbtItem.getString("DELAY")))))) {
-                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
+                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
                             .replaceAll("#delay#", String.valueOf(nbtItem.getString("DELAY")))))) {
-                        lore.set(i, Chat.colorize(Objects.requireNonNull(Resource.getConfig().getString("SETTINGS.ABILITY"))
-                                .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                                .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                        lore.set(i, Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                                .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                                .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(command + ".DISPLAY")))
                                 .replaceAll("#delay#", String.valueOf(delay))));
                         im.setLore(lore);
                         nbtItem.getItem().setItemMeta(im);
@@ -210,9 +209,9 @@ public class NBTItem {
                         break;
                     }
                 } else {
-                    lore.add(Objects.requireNonNull(new Files(DItems.getInstance(), "config").getConfig().getString("SETTINGS.ABILITY"))
-                            .replaceAll("#action#", Objects.requireNonNull(Resource.getConfig().getString("CLICK_TYPE." + action)))
-                            .replaceAll("#ability#", Objects.requireNonNull(Resource.getCMD().getString(command + ".DISPLAY")))
+                    lore.add(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
+                            .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
+                            .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(command + ".DISPLAY")))
                             .replaceAll("#delay#", String.valueOf(delay)));
                     im.setLore(Items.Lore(lore));
                     nbtItem.getItem().setItemMeta(im);
@@ -228,16 +227,16 @@ public class NBTItem {
     public void setStats(String stats, Double number) {
         ItemMeta im = nbtItem.getItem().getItemMeta();
         if (im.getLore() == null) {
-            im.setLore(Items.Lore(Collections.singletonList(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number)))));
+            im.setLore(Items.Lore(Collections.singletonList(File.getStats().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number)))));
             nbtItem.getItem().setItemMeta(im);
             nbtItem.setDouble("DITEMS_STATS_" + stats.toUpperCase(), number);
             nbtItem.applyNBT(item);
         } else {
             List<String> lore = im.getLore();
             for (int i = 0; i < lore.size(); i++) {
-                if (lore.contains(Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
-                    if (lore.get(i).contains(Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
-                        lore.set(i, Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
+                if (lore.contains(Chat.colorize(File.getStats().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
+                    if (lore.get(i).contains(Chat.colorize(File.getStats().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(getDoubleStats(stats.toUpperCase())))))) {
+                        lore.set(i, Chat.colorize(File.getStats().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
                         im.setLore(lore);
                         nbtItem.getItem().setItemMeta(im);
                         nbtItem.setDouble("DITEMS_STATS_" + stats.toUpperCase(), number);
@@ -245,7 +244,7 @@ public class NBTItem {
                         break;
                     }
                 } else {
-                    lore.add(Chat.colorize(new Files(DItems.getInstance(), "stats").getConfig().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
+                    lore.add(Chat.colorize(File.getStats().getString("STATS." + stats.toUpperCase()).replaceAll("#amount#", String.valueOf(number))));
                     im.setLore(lore);
                     nbtItem.getItem().setItemMeta(im);
                     nbtItem.setDouble("DITEMS_STATS_" + stats.toUpperCase(), number);

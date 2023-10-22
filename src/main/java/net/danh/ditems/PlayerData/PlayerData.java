@@ -1,7 +1,8 @@
 package net.danh.ditems.PlayerData;
 
-import net.danh.dcore.Calculator.Calculator;
+import net.danh.ditems.Calculator.Calculator;
 import net.danh.ditems.Manager.NBTItem;
+import net.danh.ditems.Utils.File;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -11,8 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import static net.danh.ditems.Resource.Resource.getConfig;
-
 public class PlayerData {
 
     /**
@@ -20,7 +19,7 @@ public class PlayerData {
      * @return Player Level
      */
     public static int getLevel(Player p) {
-        if (Objects.requireNonNull(getConfig().getString("SETTINGS.LEVEL")).equalsIgnoreCase("VANILLA")) {
+        if (Objects.requireNonNull(File.getConfig().getString("SETTINGS.LEVEL")).equalsIgnoreCase("VANILLA")) {
             return p.getLevel();
         }
         return 0;
