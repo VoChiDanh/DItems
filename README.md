@@ -1,28 +1,28 @@
-# DItems [1.8 - 1.19.x]
+# DItems [1.8 - 1.20.x]
 
 ### Simple plugins to make item with custom stats
 
 # Commands
 
 ```
-    - "&9/ditems setname [name] - Set name"
-    - "&9/ditems reload - Reload file"
-    - "&9/ditems show [stats] - Show amount of stats in hand"
-    - "&9/ditems stats [stats] [number] - Set stats of item in hand"
-    - "&9/ditems addlore [lore] - Add lore"
-    - "&9/ditems removelore [line] - Remove lore"
-    - "&9/ditems setlore [line] [name] - Set lore"
-    - "&9/ditems help - Show help"
-    - "&9/ditems addenchant [Enchant] [Level] - Add enchant"
-    - "&9/ditems removeenchant [Enchant] - Remove enchant"
-    - "&9/ditems save [Key] - Save items"
-    - "&9/ditems unbreakable [true/false] - Set item unbreakable"
-    - "&9/ditems custom_model_data [number] - Set Custom Model Data"
-    - "&9/ditems load [key] [amount] - Load items from file"
-    - "&9/ditems setflag [flag] - Add flag"
-    - "&9/ditems removeflag [flag] - Remove flag"
-    - "&9/ditems ability_command [action] [command] [delay] - Add ability command"
-    - "&9/ditems remove_ability_command [action] - Remove ability command"
+/ditems setname [name] - Set name
+/ditems reload - Reload file
+/ditems show [stats] - Show amount of stats in hand
+/ditems stats [stats] [number] - Set stats of item in hand
+/ditems addlore [lore] - Add lore
+/ditems removelore [line] - Remove lore
+/ditems setlore [line] [name] - Set lore
+/ditems help - Show help
+/ditems addenchant [Enchant] [Level] - Add enchant
+/ditems removeenchant [Enchant] - Remove enchant
+/ditems save [Key] - Save items
+/ditems unbreakable [true/false] - Set item unbreakabl
+/ditems custom_model_data [number] - Set Custom Model Data
+/ditems load [key] [amount] - Load items from file
+/ditems setflag [flag] - Add flag
+/ditems removeflag [flag] - Remove flag
+/ditems ability_command [action] [command] [delay] - Add ability command
+/ditems remove_ability_command [action] - Remove ability command
 ```
 
 # API
