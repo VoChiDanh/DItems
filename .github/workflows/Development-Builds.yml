@@ -41,4 +41,4 @@ jobs:
           embed-description: |
             ${{ github.event.head_commit.message }}
 
-          filename: "./target/DItemsCMD.jar"
+          filename: "./target/DItems.jar"
