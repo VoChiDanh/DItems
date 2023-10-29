@@ -17,7 +17,7 @@ jobs:
         run: mvn -B package
       - uses: "actions/upload-artifact@v3"
         with:
-          name: "[#${{github.run_number}}]-DItemsCMD"
+          name: "[#${{github.run_number}}]-DItems"
           path: |
             ./target/DItems.jar
       - uses: jungwinter/split@v2
