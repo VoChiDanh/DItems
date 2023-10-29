@@ -31,9 +31,6 @@ public class File {
         return getFileSetting().get("stats.yml");
     }
 
-    public static FileConfiguration getAbility_CMD() {
-        return getFileSetting().get("Ability/cmd.yml");
-    }
 
     public static FileConfiguration getItemSaved_Items() {
         return getFileSetting().get("ItemSaved/items.yml");
@@ -51,24 +48,23 @@ public class File {
         getFileSetting().save("stats.yml");
     }
 
-    public static void saveAbility_CMD() {
-        getFileSetting().save("Ability/cmd.yml");
-    }
 
     public static void saveItemSaved_Items() {
         getFileSetting().save("ItemSaved/items.yml");
     }
 
     public static void loadFiles() {
-        getFileSetting().build("", false, "config.yml", "message.yml", "stats.yml", "Ability/cmd.yml", "ItemSaved/items.yml");
+        getFileSetting().build("", false, "config.yml", "message.yml", "stats.yml", "ItemSaved/items.yml");
+        updateConfig();
+        updateMessage();
     }
 
     public static void reloadFiles() {
-        getFileSetting().reload("config.yml", "message.yml", "stats.yml", "Ability/cmd.yml", "ItemSaved/items.yml");
+        getFileSetting().reload("config.yml", "message.yml", "stats.yml", "ItemSaved/items.yml");
     }
 
     public static void saveFiles() {
-        getFileSetting().save("config.yml", "message.yml", "stats.yml", "Ability/cmd.yml", "ItemSaved/items.yml");
+        getFileSetting().save("config.yml", "message.yml", "stats.yml", "ItemSaved/items.yml");
     }
 
     public static void updateConfig() {

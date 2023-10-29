@@ -33,7 +33,6 @@ public final class DItems extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ArmorEquip(), this);
         getServer().getPluginManager().registerEvents(new HealthRegen(), this);
         getServer().getPluginManager().registerEvents(new EquipArmor(), this);
-        getServer().getPluginManager().registerEvents(new Interact(), this);
         NMSAssistant nms = new NMSAssistant();
         if (nms.isVersionGreaterThanOrEqualTo(13)) {
             getServer().getPluginManager().registerEvents(new BlockDispenseArmor(), this);

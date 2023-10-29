@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 public class Chat {
 
     public static @NotNull String colorize(String message) {
-        return ChatColor.translateAlternateColorCodes('&', File.getConfig().getString("prefix") + " " + message);
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public static @NotNull String colorizewp(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return ChatColor.translateAlternateColorCodes('&', File.getConfig().getString("PREFIX") + " " + message);
     }
 
     public static List<String> colorize(String... message) {

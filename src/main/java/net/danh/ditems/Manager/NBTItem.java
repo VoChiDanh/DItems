@@ -1,12 +1,10 @@
 package net.danh.ditems.Manager;
 
-import net.danh.ditems.DItems;
 import net.danh.ditems.NMS.NMSAssistant;
 import net.danh.ditems.Utils.Chat;
 import net.danh.ditems.Utils.File;
 import net.danh.ditems.Utils.Items;
 import org.bukkit.Color;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +14,6 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class NBTItem {
 
@@ -118,109 +115,17 @@ public class NBTItem {
         }
     }
 
-    public void addEnchants(String enchantments, Integer level) {
-        NMSAssistant nms = new NMSAssistant();
-        Enchantment enchant;
-        if (nms.isVersionLessThanOrEqualTo(12)) {
-            enchant = Enchantment.getByName(enchantments.toUpperCase());
-        } else {
-            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getDItems(), enchantments.toUpperCase()));
-        }
-        if (enchant != null) {
-            nbtItem.getItem().addUnsafeEnchantment(enchant, level);
+    public void addEnchants(Enchantment enchantments, Integer level) {
+        if (enchantments != null) {
+            nbtItem.getItem().addUnsafeEnchantment(enchantments, level);
             nbtItem.applyNBT(item);
         }
     }
 
-    public void removeEnchants(String enchantments) {
-        NMSAssistant nms = new NMSAssistant();
-        Enchantment enchant;
-        if (nms.isVersionLessThanOrEqualTo(12)) {
-            enchant = Enchantment.getByName(enchantments.toUpperCase());
-        } else {
-            enchant = Enchantment.getByKey(new NamespacedKey(DItems.getDItems(), enchantments.toUpperCase()));
-        }
-        if (enchant != null && nbtItem.getItem().containsEnchantment(enchant)) {
-            nbtItem.getItem().removeEnchantment(enchant);
+    public void removeEnchants(Enchantment enchantments) {
+        if (enchantments != null && nbtItem.getItem().containsEnchantment(enchantments)) {
+            nbtItem.getItem().removeEnchantment(enchantments);
             nbtItem.applyNBT(item);
-        }
-    }
-
-    public void removeAbilityCommand(String action) {
-        ItemMeta im = nbtItem.getItem().getItemMeta();
-        if (im == null) {
-            return;
-        }
-        if (im.getLore() == null) return;
-        List<String> lore = im.getLore();
-        for (int i = 0; i < lore.size(); i++) {
-            if (action.equals(nbtItem.getString("CLICK"))) {
-                if (lore.contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                        .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                        .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
-                        .replaceAll("#delay#", String.valueOf(nbtItem.getString("CLICK")))))) {
-                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                            .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                            .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
-                            .replaceAll("#delay#", String.valueOf(nbtItem.getString("CLICK")))))) {
-                        lore.remove(lore.get(i));
-                        im.setLore(lore);
-                        nbtItem.getItem().setItemMeta(im);
-                        nbtItem.removeKey(action);
-                        nbtItem.applyNBT(item);
-                    }
-                }
-            }
-        }
-    }
-
-
-    public void addAbilityCommand(String action, String command, Integer delay) {
-        ItemMeta im = nbtItem.getItem().getItemMeta();
-        if (im.getLore() == null) {
-            im.setLore(Items.Lore(Collections.singletonList(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                    .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                    .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(command + ".DISPLAY")))
-                    .replaceAll("#delay#", String.valueOf(delay)))));
-            nbtItem.getItem().setItemMeta(im);
-            nbtItem.setString("CMD_" + action, command);
-            nbtItem.setInteger("DELAY_" + action, delay);
-            nbtItem.applyNBT(item);
-        } else {
-            List<String> lore = im.getLore();
-            for (int i = 0; i < lore.size(); i++) {
-                if (action.equals(nbtItem.getString("CLICK")) && lore.contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                        .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                        .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
-                        .replaceAll("#delay#", String.valueOf(nbtItem.getString("DELAY")))))) {
-                    if (lore.get(i).contains(Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                            .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                            .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(nbtItem.getString("CMD") + ".DISPLAY")))
-                            .replaceAll("#delay#", String.valueOf(nbtItem.getString("DELAY")))))) {
-                        lore.set(i, Chat.colorize(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                                .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                                .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(command + ".DISPLAY")))
-                                .replaceAll("#delay#", String.valueOf(delay))));
-                        im.setLore(lore);
-                        nbtItem.getItem().setItemMeta(im);
-                        nbtItem.setString("CMD_" + action, command);
-                        nbtItem.setInteger("DELAY_" + action, delay);
-                        nbtItem.applyNBT(item);
-                        break;
-                    }
-                } else {
-                    lore.add(Objects.requireNonNull(File.getConfig().getString("SETTINGS.ABILITY"))
-                            .replaceAll("#action#", Objects.requireNonNull(File.getConfig().getString("CLICK_TYPE." + action)))
-                            .replaceAll("#ability#", Objects.requireNonNull(File.getAbility_CMD().getString(command + ".DISPLAY")))
-                            .replaceAll("#delay#", String.valueOf(delay)));
-                    im.setLore(Items.Lore(lore));
-                    nbtItem.getItem().setItemMeta(im);
-                    nbtItem.setString("CMD_" + action, command);
-                    nbtItem.setInteger("DELAY_" + action, delay);
-                    nbtItem.applyNBT(item);
-                    break;
-                }
-            }
         }
     }
 

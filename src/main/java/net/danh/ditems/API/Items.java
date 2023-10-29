@@ -5,8 +5,10 @@ import net.danh.ditems.Manager.NBTItem;
 import net.danh.ditems.NMS.NMSAssistant;
 import net.danh.ditems.Utils.File;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -36,14 +38,17 @@ public class Items {
             nbt.setID(key);
             if (get.getConfigurationSection(key + ".Enchantments") != null) {
                 for (String enchant : Objects.requireNonNull(get.getConfigurationSection(key + ".Enchantments")).getKeys(false)) {
-                    nbt.addEnchants(enchant, get.getInt(key + ".Enchantments." + enchant));
-                }
-            }
-            if (get.getConfigurationSection(key + ".Ability") != null) {
-                for (String list : Objects.requireNonNull(get.getConfigurationSection(key + ".Ability")).getKeys(false)) {
-                    for (String cmd : Objects.requireNonNull(get.getConfigurationSection(key + ".Ability." + list)).getKeys(false)) {
-                        Integer delay = get.getInt(key + ".Ability." + list + "." + cmd);
-                        nbt.addAbilityCommand(list, cmd, delay);
+                    if (enchant != null) {
+                        Enchantment enchantments;
+                        NMSAssistant nms = new NMSAssistant();
+                        if (nms.isVersionLessThanOrEqualTo(12)) {
+                            enchantments = Enchantment.getByName(enchant);
+                        } else {
+                            enchantments = EnchantmentWrapper.getByKey(NamespacedKey.minecraft(enchant));
+                        }
+                        if (enchantments != null) {
+                            nbt.addEnchants(enchantments, get.getInt(key + ".Enchantments." + enchant));
+                        }
                     }
                 }
             }
@@ -88,7 +93,7 @@ public class Items {
             if (nms.isVersionLessThanOrEqualTo(12)) {
                 get.set(key + ".Enchantments." + e.getName(), enchants.get(e));
             } else {
-                get.set(key + ".Enchantments." + e.getKey(), enchants.get(e));
+                get.set(key + ".Enchantments." + e.getKey().getKey(), enchants.get(e));
             }
         }
         for (String stats : Objects.requireNonNull(File.getStats().getConfigurationSection("STATS")).getKeys(false)) {
@@ -96,12 +101,6 @@ public class Items {
             double level = nbt.getDoubleStats(stats);
             if (nbt.hasDoubleStats(stats) && level > 0d) {
                 get.set(key + ".Stats." + stats, level);
-            }
-        }
-        for (String click_type : File.getConfig().getStringList("ACTION")) {
-            de.tr7zw.changeme.nbtapi.NBTItem nbtItem = new de.tr7zw.changeme.nbtapi.NBTItem(item);
-            if (nbtItem.getString("CLICK_" + click_type) != null && nbtItem.getString("CMD_" + click_type) != null) {
-                get.set(key + ".Ability." + click_type + "." + nbtItem.getString("CMD_" + click_type), nbtItem.getInteger("DELAY_" + click_type));
             }
         }
         if (new NBTItem(item).hasStringListStats("LORE")) {
