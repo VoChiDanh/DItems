@@ -87,16 +87,10 @@ public class File {
         java.io.File configFile = new java.io.File(DItems.getDItems().getDataFolder(), "message.yml");
         FileConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(Objects.requireNonNull(DItems.getDItems().getResource("message.yml")), StandardCharsets.UTF_8));
         FileConfiguration currentConfig = YamlConfiguration.loadConfiguration(configFile);
-        List<String> default_admin_help = defaultConfig.getStringList("admin.help");
-        List<String> default_user_help = defaultConfig.getStringList("user.help");
-        List<String> current_admin_help = currentConfig.getStringList("admin.help");
-        List<String> current_user_help = currentConfig.getStringList("user.help");
+        List<String> default_admin_help = defaultConfig.getStringList("ADMIN.HELP");
+        List<String> current_admin_help = currentConfig.getStringList("ADMIN.HELP");
         if (default_admin_help.size() != current_admin_help.size()) {
-            getConfig().set("admin.help", default_admin_help);
-            getFileSetting().save("message.yml");
-        }
-        if (default_user_help.size() != current_user_help.size()) {
-            getConfig().set("user.help", default_user_help);
+            getConfig().set("ADMIN.HELP", default_admin_help);
             getFileSetting().save("message.yml");
         }
         try {

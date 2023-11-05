@@ -4,8 +4,10 @@ import net.danh.ditems.NMS.NMSAssistant;
 import net.danh.ditems.Utils.Chat;
 import net.danh.ditems.Utils.File;
 import net.danh.ditems.Utils.Items;
+import net.danh.ditems.Utils.Number;
 import org.bukkit.Color;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class NBTItem {
 
@@ -82,6 +85,7 @@ public class NBTItem {
         im.setLore(Items.Lore(new_lore));
         nbtItem.getItem().setItemMeta(im);
         nbtItem.getStringList("DITEMS_STATS_LORE").add(Chat.colorize(lore));
+        nbtItem.getStringList("DITEMS_STATS_LORE_LINE").add("LINE;" + (new_lore.size()));
         nbtItem.applyNBT(item);
     }
 
@@ -90,27 +94,38 @@ public class NBTItem {
         List<String> new_lore;
         if (im.getLore() != null) {
             new_lore = im.getLore();
-            if (new_lore.get(line) != null) {
-                new_lore.set(line, Chat.colorize(lore));
+            if (new_lore.get(Number.getInteger(nbtItem.getStringList("DITEMS_STATS_LORE_LINE").get(line).split(";")[1])) != null) {
+                new_lore.set(Number.getInteger(nbtItem.getStringList("DITEMS_STATS_LORE_LINE").get(line).split(";")[1]), Chat.colorize(lore));
                 im.setLore(new_lore);
                 nbtItem.getItem().setItemMeta(im);
-                nbtItem.getStringList("DITEMS_STATS_LORE").set(line, Chat.colorize(lore));
+                nbtItem.getStringList("DITEMS_STATS_LORE").set(Number.getInteger(nbtItem.getStringList("DITEMS_STATS_LORE_LINE").get(line).split(";")[1]), Chat.colorize(lore));
                 nbtItem.applyNBT(item);
             }
         }
     }
 
-    public void removeLore(Integer line) {
+    public void removeLore(Player p, Integer line) {
         ItemMeta im = nbtItem.getItem().getItemMeta();
         List<String> new_lore;
         if (im != null && im.getLore() != null) {
             new_lore = im.getLore();
-            if (new_lore.get(line) != null) {
-                new_lore.remove(new_lore.get(line));
-                im.setLore(new_lore);
-                nbtItem.getItem().setItemMeta(im);
-                nbtItem.getStringList("DITEMS_STATS_LORE").remove(new_lore.get(line));
-                nbtItem.applyNBT(item);
+            List<String> stats_lore_line = nbtItem.getStringList("DITEMS_STATS_LORE_LINE");
+            if ((stats_lore_line.size() - 1) >= line) {
+                String lore_line = stats_lore_line.get(line);
+                String lore_item = nbtItem.getStringList("DITEMS_STATS_LORE").get(line);
+                String last_lore_item = stats_lore_line.get(stats_lore_line.size() - 1);
+                int lline = Number.getInteger(lore_line.split(";")[1]) - 1;
+                if (new_lore.get(lline) != null) {
+                    new_lore.remove(new_lore.get(lline));
+                    im.setLore(new_lore);
+                    nbtItem.getItem().setItemMeta(im);
+                    nbtItem.getStringList("DITEMS_STATS_LORE").remove(lore_item);
+                    nbtItem.getStringList("DITEMS_STATS_LORE_LINE").remove(last_lore_item);
+                    nbtItem.applyNBT(item);
+                }
+            } else {
+                p.sendMessage(Chat.colorize(Objects.requireNonNull(File.getMessage().getString("ADMIN.OUT_OF_LORE"))
+                        .replace("#lol_number#", String.valueOf((stats_lore_line.size() - 1)))));
             }
         }
     }

@@ -1,5 +1,6 @@
 ADMIN:
   SET_STATS: "&e#item# now have &6#stats_amount# #stats_name#"
+  OUT_OF_LORE: "&9This item don't have that line of lore. Last line of lore is #lol_number#"
   HELP:
     - "&6/ditems setname [name] - Set name"
     - "&6/ditems reload - Reload file"

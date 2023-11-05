@@ -148,7 +148,7 @@ public class DItemsCMD extends CMDBase {
                         return;
                     }
                     int line = Number.getInteger(args[1]);
-                    new NBTItem(item).removeLore(line);
+                    new NBTItem(item).removeLore(p, line);
                 }
             }
             if (args.length > 1) {
